@@ -2,31 +2,47 @@ package com.example.planosycentellas.repository;
 
 
 import android.os.AsyncTask;
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.planosycentellas.api.Provider;
+import com.example.planosycentellas.model.Episode;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class Repository {
 
     private Provider provider;
-
+    private MutableLiveData<List<Episode>> episodeList;
 
     public Repository(){
         provider = new Provider();
+        episodeList = new MutableLiveData<>();
     }
 
-    public void getData(){
+    public MutableLiveData<List<Episode>> getEpisodes(){
 
-        new FetchData().execute();
+        if(episodeList.getValue() == null){
+            new FetchData().execute();
+        }
+
+        return episodeList;
     }
 
 
-    class FetchData extends AsyncTask<Void, Void, Void> {
+    class FetchData extends AsyncTask<Void, Void, List<Episode>> {
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected List<Episode> doInBackground(Void... voids) {
+            return provider.getData();
+        }
 
-            provider.getData();
-            return null;
+        @Override
+        protected void onPostExecute(List<Episode> episodes) {
+            super.onPostExecute(episodes);
+            episodeList.setValue(episodes);
         }
     }}
