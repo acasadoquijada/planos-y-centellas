@@ -68,4 +68,11 @@ dependencies {
     debugImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     debugImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
 
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.13.1'
+
+    // Dragger
+    implementation 'com.google.dagger:dagger:2.27'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.27'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
 }

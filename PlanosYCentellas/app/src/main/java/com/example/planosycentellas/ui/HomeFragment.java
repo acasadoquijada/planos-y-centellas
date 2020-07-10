@@ -33,6 +33,8 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+
+        mViewModel.getData();
         // TODO: Use the ViewModel
     }
 
