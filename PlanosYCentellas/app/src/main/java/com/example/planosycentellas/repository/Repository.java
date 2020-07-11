@@ -18,10 +18,12 @@ public class Repository {
 
     private Provider provider;
     private MutableLiveData<List<Episode>> episodeList;
+    private MutableLiveData<List<String>> news;
 
     public Repository(){
         provider = new Provider();
         episodeList = new MutableLiveData<>();
+        news = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<Episode>> getEpisodes(){
@@ -31,6 +33,13 @@ public class Repository {
         }
 
         return episodeList;
+    }
+
+    public MutableLiveData<List<String>> getNews(){
+        if(news.getValue() == null){
+            new FetchNews().execute();
+        }
+        return news;
     }
 
 
@@ -45,4 +54,19 @@ public class Repository {
             super.onPostExecute(episodes);
             episodeList.setValue(episodes);
         }
-    }}
+    }
+    class FetchNews extends AsyncTask<Void, Void, List<String>> {
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+            return provider.getUpcoming();
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+            super.onPostExecute(strings);
+            news.setValue(strings);
+        }
+    }
+}
+
+

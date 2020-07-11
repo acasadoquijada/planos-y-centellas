@@ -11,6 +11,12 @@
         android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="@string/bot_nav_search_text" />
+
+    <item
+        android:id="@+id/upcomingFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_new_releases"
+        android:title="@string/bot_nav_more_text"/>
     <item
         android:id="@+id/moreFragment"
         android:enabled="true"

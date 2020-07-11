@@ -1,56 +1,62 @@
 package com.example.planosycentellas.ui;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.planosycentellas.ViewModel.HomeViewModel;
 import com.example.planosycentellas.R;
+import com.example.planosycentellas.ViewModel.HomeViewModel;
 import com.example.planosycentellas.adapter.EpisodeListAdapter;
+import com.example.planosycentellas.adapter.NewsAdapter;
+import com.example.planosycentellas.databinding.FragmentUpcomingBinding;
 import com.example.planosycentellas.databinding.HomeFragmentBinding;
-import com.example.planosycentellas.model.Episode;
-import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemClickListener {
+
+public class UpcomingFragment extends Fragment {
 
     private HomeViewModel mViewModel;
-    private HomeFragmentBinding mBinding;
-    private EpisodeListAdapter adapter;
+    private FragmentUpcomingBinding mBinding;
+    private NewsAdapter adapter;
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public UpcomingFragment() {
+
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
-        mBinding = DataBindingUtil.inflate(inflater,R.layout.home_fragment,container,false);
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_upcoming,container,false);
 
         setupRecyclerView();
+
         return mBinding.getRoot();
     }
 
     private void setupRecyclerView(){
-        RecyclerView recyclerView = mBinding.episodeListRecyclerView;
+        RecyclerView recyclerView = mBinding.newListRecyclerView;
         recyclerView.setLayoutManager(createGridLayoutManager());
-        adapter = new EpisodeListAdapter(this);
+        adapter = new NewsAdapter();
         recyclerView.setAdapter(adapter);
     }
 
@@ -68,11 +74,12 @@ public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemCli
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
-        mViewModel.getEpisodes().observe(getViewLifecycleOwner(), episodes -> adapter.setEpisodes(episodes));
-    }
 
-    @Override
-    public void onItemClick(int clickedItem, boolean delete) {
-        Toast.makeText(requireContext(),"" + clickedItem,Toast.LENGTH_SHORT).show();
+        mViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                adapter.setNews(strings);
+            }
+        });
     }
 }

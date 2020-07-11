@@ -1,5 +1,7 @@
 package com.example.planosycentellas.ViewModel;
 
+import android.net.DnsResolver;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -12,6 +14,8 @@ public class HomeViewModel extends ViewModel {
 
     private Repository repository;
     private MutableLiveData<List<Episode>> episodeList;
+    private MutableLiveData<List<String>> news;
+
 
     public HomeViewModel(){
         repository = new Repository();
@@ -22,5 +26,13 @@ public class HomeViewModel extends ViewModel {
             episodeList = repository.getEpisodes();
         }
         return episodeList;
+    }
+
+    public MutableLiveData<List<String>> getNews(){
+
+        if(news == null){
+            news = repository.getNews();
+        }
+        return news;
     }
 }
