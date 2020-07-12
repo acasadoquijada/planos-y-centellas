@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.planosycentellas.databinding.EpisodeInListBinding;
+import com.example.planosycentellas.databinding.ElementInListBinding;
 import com.example.planosycentellas.model.Episode;
 import com.squareup.picasso.Picasso;
 
@@ -29,8 +29,8 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        EpisodeInListBinding binding =
-                EpisodeInListBinding.inflate(inflater, parent, false);
+        ElementInListBinding binding =
+                ElementInListBinding.inflate(inflater, parent, false);
 
         return new EpisodeHolder(binding);
     }
@@ -63,9 +63,9 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
 
     class EpisodeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private EpisodeInListBinding binding;
+        private ElementInListBinding binding;
 
-        public EpisodeHolder(@NonNull EpisodeInListBinding binding) {
+        public EpisodeHolder(@NonNull ElementInListBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
@@ -74,8 +74,8 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
 
         void bind(String name, String image){
             Log.d("TESTING__", "NAME: " + name);
-            binding.episodeTitle.setText(name);
-            Picasso.get().load(image).into(binding.episodeImage);
+            binding.elementText.setText(name);
+            Picasso.get().load(image).into(binding.elementImage);
         }
 
         @Override

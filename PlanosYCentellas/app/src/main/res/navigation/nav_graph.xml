@@ -19,7 +19,7 @@
         android:id="@+id/moreFragment"
         android:name="com.example.planosycentellas.ui.SocialNetworkFragment"
         android:label="fragment_more"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/fragment_social_network" />
     <fragment
         android:id="@+id/upcomingFragment"
         android:name="com.example.planosycentellas.ui.NewsFragment"

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.planosycentellas.databinding.EpisodeInListBinding;
+
 import com.example.planosycentellas.databinding.NewsLayoutBinding;
 import com.squareup.picasso.Picasso;
 
