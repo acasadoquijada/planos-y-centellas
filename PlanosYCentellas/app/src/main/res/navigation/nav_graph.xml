@@ -17,12 +17,12 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.example.planosycentellas.ui.MoreFragment"
+        android:name="com.example.planosycentellas.ui.SocialNetworkFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
     <fragment
         android:id="@+id/upcomingFragment"
-        android:name="com.example.planosycentellas.ui.UpcomingFragment"
+        android:name="com.example.planosycentellas.ui.NewsFragment"
         android:label="fragment_upcoming"
-        tools:layout="@layout/fragment_upcoming" />
+        tools:layout="@layout/fragment_news" />
 </navigation>

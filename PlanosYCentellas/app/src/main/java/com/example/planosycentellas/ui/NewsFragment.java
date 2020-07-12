@@ -17,18 +17,18 @@ import android.view.ViewGroup;
 import com.example.planosycentellas.R;
 import com.example.planosycentellas.viewmodel.HomeViewModel;
 import com.example.planosycentellas.adapter.NewsAdapter;
-import com.example.planosycentellas.databinding.FragmentUpcomingBinding;
+import com.example.planosycentellas.databinding.FragmentNewsBinding;
 
 import java.util.List;
 
 
-public class UpcomingFragment extends Fragment {
+public class NewsFragment extends Fragment {
 
     private HomeViewModel mViewModel;
-    private FragmentUpcomingBinding mBinding;
+    private FragmentNewsBinding mBinding;
     private NewsAdapter adapter;
 
-    public UpcomingFragment() {
+    public NewsFragment() {
 
     }
 
@@ -43,7 +43,7 @@ public class UpcomingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_upcoming,container,false);
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_news,container,false);
 
         setupRecyclerView();
 
