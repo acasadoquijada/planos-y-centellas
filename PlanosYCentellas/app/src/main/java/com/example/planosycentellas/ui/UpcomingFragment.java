@@ -15,13 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.planosycentellas.R;
-import com.example.planosycentellas.ViewModel.HomeViewModel;
-import com.example.planosycentellas.adapter.EpisodeListAdapter;
+import com.example.planosycentellas.viewmodel.HomeViewModel;
 import com.example.planosycentellas.adapter.NewsAdapter;
 import com.example.planosycentellas.databinding.FragmentUpcomingBinding;
-import com.example.planosycentellas.databinding.HomeFragmentBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,7 +72,7 @@ public class UpcomingFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
-        mViewModel.getNews().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+        mViewModel.getNewsList().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {
                 adapter.setNews(strings);

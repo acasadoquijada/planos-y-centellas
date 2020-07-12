@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Planos y Centellas</string>
-    <string name="bot_nav_home_text">Home</string>
-    <string name="bot_nav_search_text">Search</string>
-    <string name="bot_nav_more_text">More</string>
+    <string name="bot_nav_home_text">Inicio</string>
+    <string name="bot_nav_search_text">Buscar</string>
+    <string name="bot_nav_more_text">Mas</string>
     <string name="episodeImageViewContentDescription">This is the episode image</string>
     <string name="slidingMediaReproducerImageContentDescription">TODO</string>
 
