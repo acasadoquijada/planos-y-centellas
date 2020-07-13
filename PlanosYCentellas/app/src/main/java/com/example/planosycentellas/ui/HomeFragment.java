@@ -1,8 +1,11 @@
 package com.example.planosycentellas.ui;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,10 +20,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.planosycentellas.model.Episode;
+import com.example.planosycentellas.model.PodcastInfo;
 import com.example.planosycentellas.viewmodel.HomeViewModel;
 import com.example.planosycentellas.R;
 import com.example.planosycentellas.adapter.EpisodeListAdapter;
 import com.example.planosycentellas.databinding.HomeFragmentBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,7 +45,7 @@ public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemCli
 
         setupDataBinding(inflater, container);
 
-        setupRecyclerView();
+       // setupRecyclerView();
 
         return getViewRoot();
     }
@@ -60,7 +65,7 @@ public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemCli
 
 
     private void setupLayoutManager(){
-        getRecyclerView().setLayoutManager(createGridLayoutManager());
+   //     getRecyclerView().setLayoutManager(createGridLayoutManager());
     }
 
     private GridLayoutManager createGridLayoutManager(){
@@ -73,21 +78,21 @@ public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemCli
 
 
     private void setupAdapter(){
-        createAdapter();
-        setAdapter();
+      //  createAdapter();
+     //   setAdapter();
     }
 
     private void createAdapter(){
         adapter = new EpisodeListAdapter(this);
     }
 
-    private void setAdapter(){
+ /*   private void setAdapter(){
         getRecyclerView().setAdapter(adapter);
-    }
+    }*/
 
-    private RecyclerView getRecyclerView(){
+  /*  private RecyclerView getRecyclerView(){
         return mBinding.episodeListRecyclerView;
-    }
+    }*/
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -97,8 +102,29 @@ public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemCli
 
     private void setupViewModel(){
         getViewModel();
-        observeEpisodeList();
+     //   observeEpisodeList();
         mViewModel.getPatreonTierList();
+
+        mViewModel.getPodcastInfo().observe(getViewLifecycleOwner(), new Observer<PodcastInfo>() {
+            @Override
+            public void onChanged(PodcastInfo podcastInfo) {
+                mBinding.title.setText(podcastInfo.getName());
+                Picasso.get().load(podcastInfo.getImage()).into(mBinding.podcastImage);
+                mBinding.description.setText(podcastInfo.getDescription());
+                mBinding.contactInfo.setText(podcastInfo.getEmail());
+
+                mBinding.contactInfo.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        emailIntent.setType("text/plain");
+                        startActivity(emailIntent);
+
+                    }
+                });
+            }
+        });
     }
 
     private void getViewModel(){

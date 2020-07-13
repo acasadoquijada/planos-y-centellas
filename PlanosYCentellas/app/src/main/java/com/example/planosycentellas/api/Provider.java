@@ -1,7 +1,10 @@
 package com.example.planosycentellas.api;
 
+import android.util.Log;
+
 import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.model.PatreonTier;
+import com.example.planosycentellas.model.PodcastInfo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,9 +21,29 @@ public class Provider {
     private final String url =
             "https://www.ivoox.com/podcast-planos-centellas_fg_f1609149_filtro_1.xml";
 
+    public PodcastInfo getPodcastInfo(){
+
+        PodcastInfo podcastInfo = new PodcastInfo();
+
+        try{
+
+            Document doc = Jsoup.connect(url).get().parser(Parser.xmlParser());
+
+            podcastInfo.setDescription(doc.select("description").get(0).text());
+            podcastInfo.setName(doc.select("title").get(0).text());
+            podcastInfo.setImage(doc.select("itunes|image").attr("href"));
+            podcastInfo.setEmail(doc.select("itunes|email").text());
+
+            return podcastInfo;
+
+        } catch (IOException e){
+            e.printStackTrace();
+            return podcastInfo;
+        }
+
+    }
 
     public List<Episode> getData(){
-
 
         try{
 
@@ -132,4 +155,6 @@ public class Provider {
             return patreonTierList;
         }
     }
+
+
 }

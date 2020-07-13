@@ -102,7 +102,6 @@ public class SocialNetworkFragment extends Fragment {
 
     }
 
-
     private void setupOnClickListenerIvoox(){
         setupOnClickListener(ivoox);
     }
@@ -119,10 +118,7 @@ public class SocialNetworkFragment extends Fragment {
         setupOnClickListener(itunes);
     }
 
-    private void setupOnClickListenerTwitter(){
-        setupOnClickListener(twitter);
-
-    }
+    private void setupOnClickListenerTwitter(){ setupOnClickListener(twitter); }
 
     private void setupOnClickListenerFacebook(){
         setupOnClickListener(facebook);

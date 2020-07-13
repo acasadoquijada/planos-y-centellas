@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.model.PatreonTier;
+import com.example.planosycentellas.model.PodcastInfo;
 import com.example.planosycentellas.repository.Repository;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<List<Episode>> episodeList;
     private MutableLiveData<List<String>> newsList;
     private MutableLiveData<List<PatreonTier>> patreonTierList;
+    private MutableLiveData<PodcastInfo> podcastInfo;
 
 
     public HomeViewModel(){
@@ -52,5 +54,16 @@ public class HomeViewModel extends ViewModel {
 
     private void getPatreonTierListRepository(){
         patreonTierList = repository.getPatreonTierList();
+    }
+
+    public MutableLiveData<PodcastInfo> getPodcastInfo() {
+        if(podcastInfo == null){
+            getPodcastInfoRepository();
+        }
+        return podcastInfo;
+    }
+
+    private void getPodcastInfoRepository(){
+        podcastInfo = repository.getPodcastInfo();
     }
 }

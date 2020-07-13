@@ -1,5 +1,6 @@
 package com.example.planosycentellas.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -62,7 +63,12 @@ public class NewsFragment extends Fragment {
 
         GridLayoutManager manager = new GridLayoutManager(getContext(), spanCount);
 
-        manager.setOrientation(RecyclerView.VERTICAL);
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            manager.setOrientation(RecyclerView.VERTICAL);
+        } else {
+            manager.setOrientation(RecyclerView.HORIZONTAL);
+        }
 
         return manager;
     }
