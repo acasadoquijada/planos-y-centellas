@@ -10,3 +10,5 @@ Patreon logo: <div>Icons made by <a href="https://www.flaticon.com/authors/pixel
 Twitter logo: <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 Itunes logo: https://upload.wikimedia.org/wikipedia/commons/d/df/ITunes_logo.svg
+
+Facebook logo: <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

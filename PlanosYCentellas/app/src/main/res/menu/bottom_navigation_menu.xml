@@ -16,18 +16,18 @@
         android:id="@+id/upcomingFragment"
         android:enabled="true"
         android:icon="@drawable/ic_new_releases"
-        android:title="@string/bot_nav_more_text"/>
+        android:title="@string/bot_nav_news"/>
     <item
         android:id="@+id/moreFragment"
         android:enabled="true"
         android:icon="@drawable/ic_account_box"
-        android:title="@string/bot_nav_more_text"/>
+        android:title="@string/bot_nav_rr_ss"/>
 
     <item
         android:id="@+id/patreonFragment"
         android:enabled="true"
         android:icon="@drawable/ic_patreon"
-        android:title="Patreon"/>
+        android:title="@string/bot_nav_pateron"/>
 
 
 </menu>

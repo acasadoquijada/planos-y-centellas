@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemCli
     private void setupViewModel(){
         getViewModel();
         observeEpisodeList();
+        mViewModel.getPatreonTierList();
     }
 
     private void getViewModel(){

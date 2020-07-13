@@ -1,5 +1,7 @@
 package com.example.planosycentellas.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -70,8 +72,15 @@ public class PatreonDetailsFragment extends Fragment {
 
         mBinding.awards.setText(mViewModel.getPatreonTierList().getValue().get(pos).getRewards());
 
+        mBinding.joinButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mViewModel.getPatreonTierList().getValue().get(pos).getLink()));
+                startActivity(browserIntent);
+            }
+        });/*
         mBinding.joinButton.setOnClickListener(v -> Toast.makeText(requireContext(),
-                mViewModel.getPatreonTierList().getValue().get(pos).getLink(),Toast.LENGTH_SHORT).show());
+                mViewModel.getPatreonTierList().getValue().get(pos).getLink(),Toast.LENGTH_SHORT).show());*/
 
     }
 }
