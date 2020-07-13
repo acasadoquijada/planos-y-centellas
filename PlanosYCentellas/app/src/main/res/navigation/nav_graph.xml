@@ -25,4 +25,22 @@
         android:name="com.example.planosycentellas.ui.NewsFragment"
         android:label="fragment_upcoming"
         tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/patreonFragment"
+        android:name="com.example.planosycentellas.ui.PatreonFragment"
+        android:label="fragment_patreon"
+        tools:layout="@layout/fragment_patreon" >
+        <action
+            android:id="@+id/action_patreonFragment_to_patreonDetailsFragment"
+            app:destination="@id/patreonDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patreonDetailsFragment"
+        android:name="com.example.planosycentellas.ui.PatreonDetailsFragment"
+        android:label="fragment_patreon_details"
+        tools:layout="@layout/fragment_patreon_details" >
+        <argument
+            android:name="pos"
+            app:argType="integer" />
+    </fragment>
 </navigation>

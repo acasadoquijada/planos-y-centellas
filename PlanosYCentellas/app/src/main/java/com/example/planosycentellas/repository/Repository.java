@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.planosycentellas.api.Provider;
 import com.example.planosycentellas.model.Episode;
+import com.example.planosycentellas.model.PatreonTier;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ public class Repository {
     private Provider provider;
     private MutableLiveData<List<Episode>> episodeList;
     private MutableLiveData<List<String>> news;
+    private MutableLiveData<List<PatreonTier>> patreonTierList;
 
     public Repository(){
         provider = new Provider();
         episodeList = new MutableLiveData<>();
         news = new MutableLiveData<>();
+        patreonTierList = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<Episode>> getEpisodes(){
@@ -40,6 +43,13 @@ public class Repository {
             new FetchNews().execute();
         }
         return news;
+    }
+
+    public MutableLiveData<List<PatreonTier>> getPatreonTierList(){
+        if(patreonTierList.getValue() == null){
+            new FetchPatreonTierInfo().execute();
+        }
+        return patreonTierList;
     }
 
 
@@ -65,6 +75,19 @@ public class Repository {
         protected void onPostExecute(List<String> strings) {
             super.onPostExecute(strings);
             news.setValue(strings);
+        }
+    }
+
+    class FetchPatreonTierInfo extends AsyncTask<Void, Void, List<PatreonTier>> {
+        @Override
+        protected List<PatreonTier> doInBackground(Void... voids) {
+            return provider.getPatreonInfo();
+        }
+
+        @Override
+        protected void onPostExecute(List<PatreonTier> patreonList) {
+            super.onPostExecute(patreonList);
+            patreonTierList.setValue(patreonList);
         }
     }
 }

@@ -22,4 +22,12 @@
         android:enabled="true"
         android:icon="@drawable/ic_account_box"
         android:title="@string/bot_nav_more_text"/>
+
+    <item
+        android:id="@+id/patreonFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_patreon"
+        android:title="Patreon"/>
+
+
 </menu>
