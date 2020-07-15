@@ -136,7 +136,7 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mViewModel.getSearchQuery().setValue(query);
-          //      searchView.clearFocus();
+                searchView.clearFocus();
                 return false;
             }
 

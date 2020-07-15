@@ -80,10 +80,9 @@ public class HomeViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<Episode>> getSearchedEpisodes(){
+        return   repository.getSearchedEpisodes();
 
-        searchedEpisodes = repository.getSearchedEpisodes();
-
-        return searchedEpisodes;
+      // return searchedEpisodes;
 
     }
 
