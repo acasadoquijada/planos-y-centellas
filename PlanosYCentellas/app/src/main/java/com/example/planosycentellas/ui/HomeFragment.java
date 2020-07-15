@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment implements EpisodeListAdapter.ItemCli
     }
 
     @Override
-    public void onItemClick(int clickedItem, boolean delete) {
+    public void onItemClick(int clickedItem) {
         Toast.makeText(requireContext(),"" + clickedItem,Toast.LENGTH_SHORT).show();
     }
 }

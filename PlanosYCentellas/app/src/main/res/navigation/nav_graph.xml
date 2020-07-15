@@ -11,10 +11,14 @@
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" />
     <fragment
-        android:id="@+id/searchFragment"
+        android:id="@+id/episodeFragment"
         android:name="com.example.planosycentellas.ui.EpisodeFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_episode" />
+        android:label="fragment_episode"
+        tools:layout="@layout/fragment_episode" >
+        <action
+            android:id="@+id/action_episodeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.example.planosycentellas.ui.SocialNetworkFragment"
@@ -43,4 +47,8 @@
             android:name="pos"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.planosycentellas.ui.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

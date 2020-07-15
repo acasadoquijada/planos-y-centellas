@@ -17,10 +17,14 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<List<String>> newsList;
     private MutableLiveData<List<PatreonTier>> patreonTierList;
     private MutableLiveData<PodcastInfo> podcastInfo;
+    private MutableLiveData<String> searchQuery;
+    private MutableLiveData<List<Episode>> searchedEpisodes;
 
 
     public HomeViewModel(){
         repository = new Repository();
+        searchQuery = new MutableLiveData<>();
+        searchedEpisodes = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<Episode>> getEpisodeList(){
@@ -65,5 +69,25 @@ public class HomeViewModel extends ViewModel {
 
     private void getPodcastInfoRepository(){
         podcastInfo = repository.getPodcastInfo();
+    }
+
+    public MutableLiveData<String> getSearchQuery() {
+        return searchQuery;
+    }
+
+    public void setSearchQuery(String searchQuery) {
+        this.searchQuery.setValue(searchQuery);
+    }
+
+    public MutableLiveData<List<Episode>> getSearchedEpisodes(){
+
+        searchedEpisodes = repository.getSearchedEpisodes();
+
+        return searchedEpisodes;
+
+    }
+
+    public void searchEpisodes(){
+        repository.searchEpisodes(searchQuery.getValue());
     }
 }

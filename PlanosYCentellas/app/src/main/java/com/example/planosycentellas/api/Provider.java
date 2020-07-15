@@ -156,5 +156,8 @@ public class Provider {
         }
     }
 
+    public List<Episode> searchEpisodes(String s){
+        return getData();
+    }
 
 }

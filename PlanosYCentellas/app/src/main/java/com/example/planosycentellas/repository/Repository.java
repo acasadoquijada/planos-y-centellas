@@ -23,6 +23,7 @@ public class Repository {
     private MutableLiveData<List<String>> news;
     private MutableLiveData<List<PatreonTier>> patreonTierList;
     private MutableLiveData<PodcastInfo> podcastInfo;
+    private MutableLiveData<List<Episode>> searchedEpisodes;
 
     public Repository(){
         provider = new Provider();
@@ -30,6 +31,7 @@ public class Repository {
         news = new MutableLiveData<>();
         patreonTierList = new MutableLiveData<>();
         podcastInfo = new MutableLiveData<>();
+        searchedEpisodes = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<Episode>> getEpisodes(){
@@ -59,10 +61,16 @@ public class Repository {
         if(podcastInfo.getValue() == null){
             new FetchPodcastInfo().execute();
         }
-
         return podcastInfo;
     }
 
+    public void searchEpisodes(String query){
+        new FetchSearchEpisodes().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, query);
+    }
+
+    public MutableLiveData<List<Episode>> getSearchedEpisodes(){
+        return searchedEpisodes;
+    }
 
     class FetchData extends AsyncTask<Void, Void, List<Episode>> {
         @Override
@@ -88,7 +96,6 @@ public class Repository {
             news.setValue(strings);
         }
     }
-
     class FetchPatreonTierInfo extends AsyncTask<Void, Void, List<PatreonTier>> {
         @Override
         protected List<PatreonTier> doInBackground(Void... voids) {
@@ -101,7 +108,6 @@ public class Repository {
             patreonTierList.setValue(patreonList);
         }
     }
-
     class FetchPodcastInfo extends AsyncTask<Void, Void, PodcastInfo>{
         @Override
         protected PodcastInfo doInBackground(Void... voids) {
@@ -112,6 +118,19 @@ public class Repository {
         protected void onPostExecute(PodcastInfo podcast) {
             super.onPostExecute(podcast);
             podcastInfo.setValue(podcast);
+        }
+    }
+    class FetchSearchEpisodes extends AsyncTask<String, Void, List<Episode>>{
+        @Override
+        protected List<Episode> doInBackground(String... strings) {
+
+            return provider.searchEpisodes(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<Episode> episodeList) {
+            super.onPostExecute(episodeList);
+            searchedEpisodes.setValue(episodeList);
         }
     }
 }

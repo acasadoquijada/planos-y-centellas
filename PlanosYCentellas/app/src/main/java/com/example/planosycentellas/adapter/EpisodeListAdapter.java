@@ -58,7 +58,7 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
 
 
     public interface ItemClickListener{
-        void onItemClick(int clickedItem, boolean delete);
+        void onItemClick(int clickedItem);
     }
 
     class EpisodeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -81,7 +81,7 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
-            mItemClickListener.onItemClick(pos,false);
+            mItemClickListener.onItemClick(pos);
         }
     }
 

@@ -103,7 +103,6 @@ public class PatreonFragment extends Fragment {
                     PatreonFragmentDirections.actionPatreonFragmentToPatreonDetailsFragment(pos);
             NavHostFragment.findNavController(this).navigate(action);
         });
-
     }
 
     @Override

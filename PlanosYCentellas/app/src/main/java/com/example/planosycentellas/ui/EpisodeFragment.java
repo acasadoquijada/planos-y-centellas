@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -144,7 +146,10 @@ private EpisodeListAdapter adapter;
         int itemThatWasClickedId = item.getItemId();
 
         if (itemThatWasClickedId == R.id.action_search){
-            Toast.makeText(requireContext(),"SEARCH",Toast.LENGTH_SHORT).show();
+            NavDirections action =
+                    EpisodeFragmentDirections.actionEpisodeFragmentToSearchFragment();
+            NavHostFragment.findNavController(this).navigate(action);
+
             return true;
         }
 
@@ -153,7 +158,7 @@ private EpisodeListAdapter adapter;
 
 
     @Override
-    public void onItemClick(int clickedItem,boolean delete){
+    public void onItemClick(int clickedItem){
         Toast.makeText(requireContext(),""+clickedItem,Toast.LENGTH_SHORT).show();
     }
 }
