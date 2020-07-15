@@ -12,9 +12,9 @@
         tools:layout="@layout/home_fragment" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.planosycentellas.ui.SearchFragment"
+        android:name="com.example.planosycentellas.ui.EpisodeFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_episode" />
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.example.planosycentellas.ui.SocialNetworkFragment"
