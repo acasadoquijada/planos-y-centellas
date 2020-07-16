@@ -36,8 +36,12 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
     }
 
     public void setEpisodes(List<Episode> episodes){
-        this.episodes = episodes;
-        this.notifyDataSetChanged();
+        updateEpisodes(episodes);
+        notifyDataSetChanged();
+    }
+
+    private void updateEpisodes(List<Episode> episodeList){
+        this.episodes = episodeList;
     }
 
     @Override
@@ -67,22 +71,39 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
 
         public EpisodeHolder(@NonNull ElementInListBinding binding) {
             super(binding.getRoot());
-            this.binding = binding;
 
+            setBinding(binding);
+            setOnClickListener();
+        }
+
+        private void setBinding(ElementInListBinding binding){
+            this.binding = binding;
+        }
+
+        private void setOnClickListener(){
             itemView.setOnClickListener(this);
         }
 
         void bind(String name, String image){
-            Log.d("TESTING__", "NAME: " + name);
+            setElementText(name);
+            setElementImage(image);
+        }
+
+        private void setElementText(String name){
             binding.elementText.setText(name);
-            Picasso.get().load(image).into(binding.elementImage);
+        }
+
+        private void setElementImage(String image){
+            Picasso.get().load(image).resize(75,75).into(binding.elementImage);
         }
 
         @Override
         public void onClick(View v) {
-            int pos = getAdapterPosition();
+            setOnClick(getAdapterPosition());
+        }
+
+        private void setOnClick(int pos){
             mItemClickListener.onItemClick(pos);
         }
     }
-
 }

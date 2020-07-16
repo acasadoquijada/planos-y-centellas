@@ -36,10 +36,11 @@ public class Repository {
 
     public MutableLiveData<List<Episode>> getEpisodes(){
 
-        if(episodeList.getValue() == null){
+
+        if (episodeList.getValue() == null) {
+            Log.d("IMPROVING", "I CALL FETCH DATA");
             new FetchData().execute();
         }
-
         return episodeList;
     }
 

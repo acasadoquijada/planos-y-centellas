@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.planosycentellas.databinding.NewsLayoutBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
@@ -44,8 +46,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
     }
 
     public void setNews(List<String> news){
-        this.newsList = news;
+        updateNews(news);
         notifyDataSetChanged();
+    }
+
+    private void updateNews(List<String> news){
+        newsList = news;
     }
 
 
@@ -56,7 +62,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
         NewsHolder(@NonNull NewsLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-
         }
 
         void bind(String image){
