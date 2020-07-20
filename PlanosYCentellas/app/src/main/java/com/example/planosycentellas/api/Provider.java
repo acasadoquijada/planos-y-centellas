@@ -1,7 +1,5 @@
 package com.example.planosycentellas.api;
 
-import android.util.Log;
-
 import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.model.PatreonTier;
 import com.example.planosycentellas.model.PodcastInfo;
@@ -21,12 +19,11 @@ public class Provider {
     private final String url =
             "https://www.ivoox.com/podcast-planos-centellas_fg_f1609149_filtro_1.xml";
 
-
-    public PodcastInfo getPodcastInfo(){
+    public PodcastInfo getPodcastInfo() {
 
         PodcastInfo podcastInfo = new PodcastInfo();
 
-        try{
+        try {
 
             Document doc = Jsoup.connect(url).get().parser(Parser.xmlParser());
 
@@ -35,21 +32,20 @@ public class Provider {
             podcastInfo.setImage(doc.select("itunes|image").attr("href"));
             podcastInfo.setEmail(doc.select("itunes|email").text());
 
-            return podcastInfo;
-
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
             return podcastInfo;
         }
-
     }
 
     public List<Episode> getData(){
 
+        List<Episode> episodeList = new ArrayList<>();
+
         try{
 
             Document doc = Jsoup.connect(url).get().parser(Parser.xmlParser());
-            List<Episode> episodeList = new ArrayList<>();
 
             Elements elements = doc.select("item");
 
@@ -62,14 +58,11 @@ public class Provider {
                 episode.setUrl(e.select("description").text());
                 episode.setImage(e.select("itunes|image").attr("href"));
                 episodeList.add(episode);
-
             }
-
-            return episodeList;
-
         } catch (IOException e){
             e.printStackTrace();
-            return new ArrayList<>();
+        } finally {
+            return episodeList;
         }
     }
 
@@ -119,13 +112,13 @@ public class Provider {
                 patreonTier.setLink("https://www.patreon.com" + elements.get(i).select(
                         "a.sc-fzoiQi.hrhoNA.ibazdf-0.kYJzfB").attr("href"));
 
-                patreonTier.setRewards(elements.get(i).select("div.sc-1rlfkev-0.yMRiI").text());
+                patreonTier.setAwards(elements.get(i).select("div.sc-1rlfkev-0.yMRiI").text());
 
-                patreonTierList.add(patreonTier); }
-
-            return patreonTierList;
+                patreonTierList.add(patreonTier);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
             return patreonTierList;
         }
     }

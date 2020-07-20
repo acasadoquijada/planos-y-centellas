@@ -5,7 +5,7 @@ public class PatreonTier {
     private String title;
     private String image;
     private String price;
-    private String rewards;
+    private String awards;
     private String link;
 
     public String getImage() {
@@ -16,8 +16,8 @@ public class PatreonTier {
         return title;
     }
 
-    public String getRewards() {
-        return rewards;
+    public String getAwards() {
+        return awards;
     }
 
     public String getLink() {
@@ -32,8 +32,8 @@ public class PatreonTier {
         this.title = title;
     }
 
-    public void setRewards(String rewards) {
-        this.rewards = rewards;
+    public void setAwards(String awards) {
+        this.awards = awards;
     }
 
     public void setLink(String link) {
