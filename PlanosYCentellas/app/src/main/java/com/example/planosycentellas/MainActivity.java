@@ -7,7 +7,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
-import com.example.planosycentellas.api.Provider;
 import com.example.planosycentellas.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
         setupDataBinding();
         setUpBottonNavigation();
     }

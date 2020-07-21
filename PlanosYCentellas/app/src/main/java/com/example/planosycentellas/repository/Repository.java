@@ -2,9 +2,8 @@ package com.example.planosycentellas.repository;
 
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import androidx.lifecycle.LiveData;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.planosycentellas.api.Provider;
@@ -13,8 +12,6 @@ import com.example.planosycentellas.model.PatreonTier;
 import com.example.planosycentellas.model.PodcastInfo;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class Repository {
 
@@ -36,9 +33,7 @@ public class Repository {
 
     public MutableLiveData<List<Episode>> getEpisodes(){
 
-
         if (episodeList.getValue() == null) {
-            Log.d("IMPROVING", "I CALL FETCH DATA");
             new FetchData().execute();
         }
         return episodeList;
@@ -76,7 +71,7 @@ public class Repository {
     class FetchData extends AsyncTask<Void, Void, List<Episode>> {
         @Override
         protected List<Episode> doInBackground(Void... voids) {
-            return provider.getData();
+            return provider.getEpisodes();
         }
 
         @Override
@@ -85,7 +80,9 @@ public class Repository {
             episodeList.setValue(episodes);
         }
     }
-    class FetchNews extends AsyncTask<Void, Void, List<String>> {
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    public class FetchNews extends AsyncTask<Void, Void, List<String>> {
         @Override
         protected List<String> doInBackground(Void... voids) {
             return provider.getUpcoming();
@@ -126,7 +123,7 @@ public class Repository {
         protected List<Episode> doInBackground(String... strings) {
 
             return provider.searchEpisodes(strings[0]);
-        }
+    }
 
         @Override
         protected void onPostExecute(List<Episode> episodeList) {

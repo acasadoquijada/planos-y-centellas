@@ -1,5 +1,7 @@
 package com.example.planosycentellas.api;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.model.PatreonTier;
 import com.example.planosycentellas.model.PodcastInfo;
@@ -11,13 +13,21 @@ import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Provider {
 
-    private final String url =
+    @VisibleForTesting()
+    public String ivoox_url =
             "https://www.ivoox.com/podcast-planos-centellas_fg_f1609149_filtro_1.xml";
+
+    @VisibleForTesting()
+    public String ivoox_news_url = "https://www.ivoox.com/planos-centellas_pr_posts_609149_1.html";
+
+    @VisibleForTesting()
+    public String patreon_url = "https://www.patreon.com/planosycentellas";
 
     public PodcastInfo getPodcastInfo() {
 
@@ -25,27 +35,26 @@ public class Provider {
 
         try {
 
-            Document doc = Jsoup.connect(url).get().parser(Parser.xmlParser());
+            Document doc = Jsoup.connect(ivoox_url).get().parser(Parser.xmlParser());
 
             podcastInfo.setDescription(doc.select("description").get(0).text());
             podcastInfo.setName(doc.select("title").get(0).text());
             podcastInfo.setImage(doc.select("itunes|image").attr("href"));
             podcastInfo.setEmail(doc.select("itunes|email").text());
 
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
-        } finally {
-            return podcastInfo;
         }
+        return podcastInfo;
     }
 
-    public List<Episode> getData(){
+    public List<Episode> getEpisodes(){
 
         List<Episode> episodeList = new ArrayList<>();
 
         try{
 
-            Document doc = Jsoup.connect(url).get().parser(Parser.xmlParser());
+            Document doc = Jsoup.connect(ivoox_url).get().parser(Parser.xmlParser());
 
             Elements elements = doc.select("item");
 
@@ -59,11 +68,11 @@ public class Provider {
                 episode.setImage(e.select("itunes|image").attr("href"));
                 episodeList.add(episode);
             }
-        } catch (IOException e){
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
-        } finally {
-            return episodeList;
         }
+
+        return episodeList;
     }
 
     public List<String> getUpcoming(){
@@ -72,26 +81,25 @@ public class Provider {
         try{
 
             Document doc = Jsoup.connect(
-                    "https://www.ivoox.com/planos-centellas_pr_posts_609149_1.html").get();
+                    ivoox_news_url).get();
 
             Elements images = doc.select("div.container.container-xl");
 
             for(int i = 0; i < images.size(); i++){
                 newsList.add(images.get(i).select("div.m-bottom-10").select("a").attr("href"));
             }
-
-            return newsList;
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
-            return newsList;
         }
+
+        return newsList;
     }
 
     public List<PatreonTier> getPatreonInfo(){
         List<PatreonTier> patreonTierList = new ArrayList<>();
         try{
 
-            Document doc = Jsoup.connect("https://www.patreon.com/planosycentellas").get();
+            Document doc = Jsoup.connect(patreon_url).get();
 
             Elements elements = doc.select("div.sc-fzoLsD.cCFuMf");
 
@@ -116,15 +124,14 @@ public class Provider {
 
                 patreonTierList.add(patreonTier);
             }
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
-        } finally {
-            return patreonTierList;
         }
+        return patreonTierList;
     }
 
     public List<Episode> searchEpisodes(String s){
-        return getData();
+        return getEpisodes();
     }
 
 }

@@ -7,6 +7,13 @@ public class PodcastInfo {
     private String image;
     private String description;
 
+    public PodcastInfo(){
+      name= "";
+      email= "";
+      image= "";
+      description = "";
+    }
+
 
     public String getName() {
         return name;

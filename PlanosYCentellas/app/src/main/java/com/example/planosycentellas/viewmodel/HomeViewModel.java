@@ -1,5 +1,6 @@
 package com.example.planosycentellas.viewmodel;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,11 +11,13 @@ import com.example.planosycentellas.repository.Repository;
 
 import java.util.List;
 
+
 public class HomeViewModel extends ViewModel {
 
-    private Repository repository;
-    private MutableLiveData<String> searchQuery;
+    @VisibleForTesting()
+    public Repository repository;
 
+    private MutableLiveData<String> searchQuery;
     public HomeViewModel(){
         repository = new Repository();
         searchQuery = new MutableLiveData<>();

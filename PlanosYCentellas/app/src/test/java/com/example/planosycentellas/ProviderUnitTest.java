@@ -24,13 +24,35 @@ public class ProviderUnitTest {
 
     private Provider provider;
 
+    private String actual_ivoox_url;
+    private String actual_ivoox_news_url;
+    private String actual_patreon_url;
+
+
     @Before
     public void setup(){
         provider = new Provider();
+        actual_ivoox_url = provider.ivoox_url;
+        actual_ivoox_news_url = provider.ivoox_news_url;
+        actual_patreon_url = provider.patreon_url;
     }
 
     @Test
     public void getPodcastInfoReturnActualData(){
+        getPodcastInfo(actual_ivoox_url);
+    }
+
+    /**
+     * Both possible exception, IOException | IllegalArgumentException are covered by the same catch
+     * section, so we trigger the IllegalArgumentException to test it
+     */
+    @Test
+    public void getPodcastInfoReturnEmptyObjectWrongUrl(){
+        getPodcastInfo("wrong_url");
+    }
+
+    private void getPodcastInfo(String url){
+        provider.ivoox_url = url;
         PodcastInfo podcastInfo = provider.getPodcastInfo();
         checkPodcastInfoNotNull(podcastInfo);
     }
@@ -42,11 +64,25 @@ public class ProviderUnitTest {
         assertNotNull(podcastInfo.getName());
     }
 
+    /**
+     * Both possible exception, IOException | IllegalArgumentException are covered by the same catch
+     * section, so we trigger the IllegalArgumentException to test it
+     */
+    @Test
+    public void getEpisodeListReturnReturnEmptyObjectWrongUrl(){
+        getEpisodeList("wrong_url");
+    }
+
     @Test
     public void getEpisodeListReturnActualData(){
-        List<Episode> episodeList = provider.getData();
+        getEpisodeList(actual_ivoox_url);
+    }
 
-        // This could be improved
+    private void getEpisodeList(String url){
+        provider.ivoox_url = url;
+
+        List<Episode> episodeList = provider.getEpisodes();
+
         for (Episode episode: episodeList) {
             checkEpisodeInfoNotNull(episode);
         }
@@ -61,6 +97,21 @@ public class ProviderUnitTest {
 
     @Test
     public void getPatreonInfoReturnActualData(){
+        getPatreonInfo(actual_patreon_url);
+    }
+
+    /**
+     * Both possible exception, IOException | IllegalArgumentException are covered by the same catch
+     * section, so we trigger the IllegalArgumentException to test it
+     */
+    @Test
+    public void getPatreonInfoReturnReturnEmptyObjectWrongUrl(){
+        getPatreonInfo("wrong_url");
+    }
+
+    private void getPatreonInfo(String url){
+
+        provider.patreon_url = url;
 
         List<PatreonTier> patreonTierList = provider.getPatreonInfo();
 
@@ -79,8 +130,20 @@ public class ProviderUnitTest {
 
     @Test
     public void getUpcomingReturnActualData(){
+        getUpconming(actual_ivoox_news_url);
+    }
+
+    @Test
+    public void getUpcomingEmptyObjectWrongUrl(){
+        getUpconming("wrong_url");
+    }
+
+    private void getUpconming(String url){
+        provider.ivoox_news_url = url;
         List<String> uppcoming = provider.getUpcoming();
         assertFalse(uppcoming.contains(Collections.EMPTY_LIST));
     }
+
+
 
 }

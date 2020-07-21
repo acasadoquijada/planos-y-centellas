@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.planosycentellas.R;
 import com.example.planosycentellas.databinding.FragmentPatreonDetailsBinding;
@@ -70,7 +69,7 @@ public class PatreonDetailsFragment extends Fragment {
 
         mBinding.price.setText(mViewModel.getPatreonTierList().getValue().get(pos).getPrice());
 
-        mBinding.awards.setText(mViewModel.getPatreonTierList().getValue().get(pos).getRewards());
+        mBinding.awards.setText(mViewModel.getPatreonTierList().getValue().get(pos).getAwards());
 
         mBinding.joinButton.setOnClickListener(new View.OnClickListener(){
             @Override

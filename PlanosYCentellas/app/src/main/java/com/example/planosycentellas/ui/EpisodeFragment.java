@@ -25,6 +25,7 @@ import com.example.planosycentellas.adapter.EpisodeListAdapter;
 import com.example.planosycentellas.databinding.FragmentEpisodeBinding;
 
 import com.example.planosycentellas.model.Episode;
+import com.example.planosycentellas.repository.Repository;
 import com.example.planosycentellas.viewmodel.HomeViewModel;
 
 import java.util.List;
@@ -51,7 +52,6 @@ private EpisodeListAdapter adapter;
 
         setupRecyclerView();
 
-
         return getViewRoot();
     }
 
@@ -74,7 +74,7 @@ private EpisodeListAdapter adapter;
     }
 
     private GridLayoutManager createGridLayoutManager(){
-        GridLayoutManager manager=new GridLayoutManager(getContext(),1);
+        GridLayoutManager manager = new GridLayoutManager(getContext(),1);
 
         manager.setOrientation(RecyclerView.VERTICAL);
 
@@ -88,7 +88,7 @@ private EpisodeListAdapter adapter;
     }
 
     private void createAdapter(){
-            adapter=new EpisodeListAdapter(this);
+            adapter = new EpisodeListAdapter(this);
     }
 
    private void setAdapter(){
@@ -112,7 +112,7 @@ private EpisodeListAdapter adapter;
     }
 
     private void getViewModel(){
-        mViewModel=new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
     }
 
     private void observeEpisodeList(){
@@ -122,7 +122,6 @@ private EpisodeListAdapter adapter;
     private void setEpisodeListAdapter(List<Episode> episodeList){
         adapter.setEpisodes(episodeList);
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -136,24 +135,22 @@ private EpisodeListAdapter adapter;
         setHasOptionsMenu(true);
     }
 
-    /**
-     * Method run when a menu item is clicked to sort the movies
-     * @param item clicked
-     * @return boolean result of the operation
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
 
         if (itemThatWasClickedId == R.id.action_search){
-            NavDirections action =
-                    EpisodeFragmentDirections.actionEpisodeFragmentToSearchFragment();
-            NavHostFragment.findNavController(this).navigate(action);
-
+            navigateToSearchFragment();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void navigateToSearchFragment(){
+        NavDirections action =
+                EpisodeFragmentDirections.actionEpisodeFragmentToSearchFragment();
+        NavHostFragment.findNavController(this).navigate(action);
     }
 
 
