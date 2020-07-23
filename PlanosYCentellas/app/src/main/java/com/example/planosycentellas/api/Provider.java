@@ -1,5 +1,7 @@
 package com.example.planosycentellas.api;
 
+import android.util.Log;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.example.planosycentellas.model.Episode;
@@ -64,9 +66,10 @@ public class Provider {
                 Element e = elements.get(i);
                 episode.setTitle(e.select("title").text());
                 episode.setDescription(e.select("description").text());
-                episode.setUrl(e.select("description").text());
+                episode.setUrl(e.select("enclosure").attr("url"));
                 episode.setImage(e.select("itunes|image").attr("href"));
                 episodeList.add(episode);
+
             }
         } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
