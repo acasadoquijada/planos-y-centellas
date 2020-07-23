@@ -21,7 +21,7 @@ All the methods of this class have their corresponding unit test. The exception 
 This module obtains the information from the **Provider** class of the **api**. Contains only one class, repository.
 
 
-For this class, all the methods related to LiveData are tested. We ensure that setValue() triggers the onChange() method. I followed this link: https://medium.com/androiddevelopers/unit-testing-livedata-and-other-common-observability-problems-bb477262eb04
+For this class, all the methods related to LiveData are tested. We ensure that setValue() triggers the onChange() method. For this tests, the strategy explained in this link https://medium.com/androiddevelopers/unit-testing-livedata-and-other-common-observability-problems-bb477262eb04 was followed.
 
 On the other hand, there are some AsynTask inner classes that use an instance of Provider in their *doInBackground* methods, and update MutableLiveData using setValue in *onPostExecute*.
 
