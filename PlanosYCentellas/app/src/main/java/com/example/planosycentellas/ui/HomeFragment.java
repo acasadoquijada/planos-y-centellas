@@ -27,22 +27,16 @@ import com.example.planosycentellas.adapter.EpisodeListAdapter;
 import com.example.planosycentellas.databinding.HomeFragmentBinding;
 import com.squareup.picasso.Picasso;
 
-
-
 public class HomeFragment extends Fragment {
+
+    private HomeViewModel mViewModel;
+    private HomeFragmentBinding mBinding;
+
+    public HomeFragment(){}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    HomeViewModel mViewModel;
-
-    private HomeFragmentBinding mBinding;
-
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
     }
 
     @Override
@@ -69,29 +63,34 @@ public class HomeFragment extends Fragment {
 
     private void setupViewModel(){
         getViewModel();
-     //   observeEpisodeList();
-        mViewModel.getPatreonTierList();
+        observePodcastInfo();
+    }
 
-        mViewModel.getPodcastInfo().observe(getViewLifecycleOwner(), new Observer<PodcastInfo>() {
-            @Override
-            public void onChanged(PodcastInfo podcastInfo) {
-                mBinding.title.setText(podcastInfo.getName());
-                Picasso.get().load(podcastInfo.getImage()).into(mBinding.podcastImage);
-                mBinding.description.setText(podcastInfo.getDescription());
-                mBinding.contactInfo.setText(podcastInfo.getEmail());
+    private void observePodcastInfo(){
+        mViewModel.getPodcastInfo().observe(getViewLifecycleOwner(), this::populateUI);
+    }
 
-                mBinding.contactInfo.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
+    private void populateUI(PodcastInfo podcastInfo){
+        setPodcastTitle(podcastInfo.getName());
+        setPodcastImage(podcastInfo.getImage());
+        setDescription(podcastInfo.getDescription());
+        setContactInfo(podcastInfo.getEmail());
+    }
 
-                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                        emailIntent.setType("text/plain");
-                        startActivity(emailIntent);
+    private void setPodcastTitle(String title){
+        mBinding.title.setText(title);
+    }
 
-                    }
-                });
-            }
-        });
+    private void setPodcastImage(String image){
+        Picasso.get().load(image).into(mBinding.podcastImage);
+    }
+
+    private void setDescription(String description){
+        mBinding.description.setText(description);
+    }
+
+    private void setContactInfo(String email){
+        mBinding.contactInfo.setText(email);
     }
 
     private void getViewModel(){
