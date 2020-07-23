@@ -1,5 +1,7 @@
 package com.example.planosycentellas.model;
 
+import androidx.annotation.NonNull;
+
 public class Episode {
 
     private String title;
@@ -39,5 +41,12 @@ public class Episode {
 
     public String getImage() {
         return image;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+
+        return "\nTITLE: " + title +  "\nURL: " + url + "\nIMAGE: " + image;
     }
 }

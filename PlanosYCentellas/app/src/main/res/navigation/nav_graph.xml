@@ -20,7 +20,7 @@
             app:destination="@id/searchFragment" />
     </fragment>
     <fragment
-        android:id="@+id/moreFragment"
+        android:id="@+id/socialNetworkFragment"
         android:name="com.example.planosycentellas.ui.SocialNetworkFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_social_network" />
