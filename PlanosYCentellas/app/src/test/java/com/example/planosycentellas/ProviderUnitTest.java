@@ -70,21 +70,27 @@ public class ProviderUnitTest {
      */
     @Test
     public void getEpisodeListReturnReturnEmptyObjectWrongUrl(){
-        getEpisodeList("wrong_url");
+        List<Episode> episodeList = getEpisodeList("wrong_url");
+        checkEpisodeListInfoNotNull(episodeList);
     }
+
+
+    private void checkEpisodeListInfoNotNull(List<Episode> episodeList){
+        for (Episode episode: episodeList) {
+            checkEpisodeInfoNotNull(episode);
+        }
+    }
+
 
     @Test
     public void getEpisodeListReturnActualData(){
-        getEpisodeList(actual_ivoox_url);
+        List<Episode> episodeList = getEpisodeList(actual_ivoox_url);
+        checkEpisodeListActualInfo(episodeList);
     }
 
-    private void getEpisodeList(String url){
-        provider.ivoox_url = url;
-
-        List<Episode> episodeList = provider.getEpisodes();
-
+    private void checkEpisodeListActualInfo(List<Episode> episodeList){
         for (Episode episode: episodeList) {
-            checkEpisodeInfoNotNull(episode);
+            checkEpisodeActualInfo(episode);
         }
     }
 
@@ -93,6 +99,18 @@ public class ProviderUnitTest {
         assertNotNull(episode.getDescription());
         assertNotNull(episode.getTitle());
         assertNotNull(episode.getUrl());
+    }
+
+    private void checkEpisodeActualInfo(Episode episode){
+        assertNotNull(episode.getDescription());
+        assertNotNull(episode.getTitle());
+        assertTrue(episode.getUrl().contains("https") || episode.getUrl().contains("http"));
+        assertTrue(episode.getImage().contains("https") || episode.getImage().contains("http"));
+    }
+
+    private List<Episode> getEpisodeList(String url){
+        provider.ivoox_url = url;
+        return provider.getEpisodes();
     }
 
     @Test
