@@ -1,7 +1,5 @@
 package com.example.planosycentellas;
 
-import android.os.AsyncTask;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.example.planosycentellas.model.Episode;
@@ -20,13 +18,12 @@ import org.junit.runners.JUnit4;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import static org.junit.Assert.assertEquals;
 
 
 @RunWith(JUnit4.class)
-public class RepositoryUnitTest {
+public class RepositoryUnitTest{
 
     private Repository repository;
 
@@ -51,15 +48,17 @@ public class RepositoryUnitTest {
     @Test
     public void newsIsNotifiedCorrectly() throws InterruptedException {
 
-        List<String> news = new ArrayList<>();
 
-        repository.getNews().setValue(news);
+        List<String> newsList = new ArrayList<>();
 
-        assertEquals(LiveDataTestUtil.getOrAwaitValue(repository.getNews()),news);
+        repository.getNews().setValue(newsList);
+
+        assertEquals(LiveDataTestUtil.getOrAwaitValue(repository.getNews()), newsList);
+
+
     }
 
-
-    @Test
+        @Test
     public void patreonTierListIsNotifiedCorrectly() throws InterruptedException {
 
         List<PatreonTier> patreonTierList = new ArrayList<>();

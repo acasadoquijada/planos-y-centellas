@@ -1,6 +1,7 @@
 package com.example.planosycentellas.repository;
 
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import androidx.annotation.VisibleForTesting;
@@ -81,7 +82,7 @@ public class Repository {
         }
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public class FetchNews extends AsyncTask<Void, Void, List<String>> {
         @Override
         protected List<String> doInBackground(Void... voids) {

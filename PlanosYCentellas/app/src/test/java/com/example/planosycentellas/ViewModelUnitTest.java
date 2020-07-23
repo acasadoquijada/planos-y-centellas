@@ -35,7 +35,6 @@ public class ViewModelUnitTest {
 
     @Before
     public void setup(){
-
         viewModel = new HomeViewModel();
     }
 

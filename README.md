@@ -1,5 +1,13 @@
-READMETODO
+# READMETODO
 
+
+
+
+
+
+## Testing
+
+Please check [here](docs/testing/english.md) for more information about the testing strategy followed.
 
 Youtube logo: <div>Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
