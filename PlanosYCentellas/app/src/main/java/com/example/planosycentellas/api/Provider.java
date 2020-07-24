@@ -1,10 +1,9 @@
 package com.example.planosycentellas.api;
 
-import android.util.Log;
-
 import androidx.annotation.VisibleForTesting;
 
 import com.example.planosycentellas.model.Episode;
+import com.example.planosycentellas.model.PatreonAwards;
 import com.example.planosycentellas.model.PatreonTier;
 import com.example.planosycentellas.model.PodcastInfo;
 
@@ -15,7 +14,6 @@ import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +97,9 @@ public class Provider {
     }
 
     public List<PatreonTier> getPatreonInfo(){
+
         List<PatreonTier> patreonTierList = new ArrayList<>();
+
         try{
 
             Document doc = Jsoup.connect(patreon_url).get();
@@ -110,20 +110,15 @@ public class Provider {
 
                 PatreonTier patreonTier = new PatreonTier();
 
-                patreonTier.setTitle(elements.get(i).select("div.sc-AxjAm.kGRoiw").text());
+                patreonTier.setTitle(getPatreonTitle(elements.get(i)));
 
-                patreonTier.setPrice(elements.get(i).select(
-                        "div.sc-AxjAm.bdDRMi").text() + " "
-                        + elements.get(i).select("div.sc-AxjAm.ufKCT").text() + " "
-                        + elements.get(i).select("div.sc-AxjAm.hpINne").text());
+                patreonTier.setPrice(getPatreonPrice(elements.get(i)));
 
-                patreonTier.setImage(elements.get(i).select(
-                        "div.sc-fzoLsD.cBkBik").select("img").attr("src"));
+                patreonTier.setImage(getPatreonImage(elements.get(i)));
 
-                patreonTier.setLink("https://www.patreon.com" + elements.get(i).select(
-                        "a.sc-fzoiQi.hrhoNA.ibazdf-0.kYJzfB").attr("href"));
+                patreonTier.setLink(getPatreonUrl(elements.get(i)));
 
-                patreonTier.setAwards(elements.get(i).select("div.sc-1rlfkev-0.yMRiI").text());
+                patreonTier.setAwards(getPatreonAwards(elements.get(i)));
 
                 patreonTierList.add(patreonTier);
             }
@@ -131,6 +126,61 @@ public class Provider {
             e.printStackTrace();
         }
         return patreonTierList;
+    }
+
+    private PatreonAwards getPatreonAwards(Element element){
+
+        PatreonAwards patreonAwards = new PatreonAwards();
+
+        patreonAwards.setInitialMessage(getAwardInitialMessage(element));
+
+        patreonAwards.setAwardsDetails(getPatreonAwardsDetails(element));
+
+        return patreonAwards;
+    }
+
+    private String getAwardInitialMessage(Element element){
+
+        // Initial message
+        String initialMessage = element.select("div.sc-1rlfkev-0.yMRiI").select("div").text();
+
+        // Get only the initial message
+        initialMessage = (initialMessage.substring(0,initialMessage.indexOf("Recompensas")));
+
+        return initialMessage;
+    }
+
+    private List<String> getPatreonAwardsDetails(Element element){
+
+        List<String> awards = new ArrayList<>();
+        int size =  element.select("div.sc-1rlfkev-0.yMRiI").select("div").select("li").size();
+
+        for(int j = 0; j < size; j++) {
+            awards.add(element.select("div.sc-1rlfkev-0.yMRiI").select("div").select("li").get(j).text());
+        }
+
+        return awards;
+    }
+
+    private String getPatreonTitle(Element element){
+        return element.select("div.sc-AxjAm.kGRoiw").text();
+    }
+
+    private String getPatreonPrice(Element element){
+        return element.select(
+                "div.sc-AxjAm.bdDRMi").text() + " "
+                +element.select("div.sc-AxjAm.ufKCT").text() + " "
+                + element.select("div.sc-AxjAm.hpINne").text();
+    }
+
+    private String getPatreonImage(Element element){
+        return element.select(
+                "div.sc-fzoLsD.cBkBik").select("img").attr("src");
+    }
+
+    private String getPatreonUrl(Element element){
+        return "https://www.patreon.com" + element.select(
+                "a.sc-fzoiQi.hrhoNA.ibazdf-0.kYJzfB").attr("href");
     }
 
     public List<Episode> searchEpisodes(String s){

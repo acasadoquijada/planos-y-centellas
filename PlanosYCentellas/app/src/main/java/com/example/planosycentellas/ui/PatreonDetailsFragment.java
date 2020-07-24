@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,6 @@ public class PatreonDetailsFragment extends Fragment {
     private int pos;
 
     public PatreonDetailsFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -69,7 +69,9 @@ public class PatreonDetailsFragment extends Fragment {
 
         mBinding.price.setText(mViewModel.getPatreonTierList().getValue().get(pos).getPrice());
 
-        mBinding.awards.setText(mViewModel.getPatreonTierList().getValue().get(pos).getAwards());
+        mBinding.awardsInitialMessage.setText(mViewModel.getPatreonTierList().getValue().get(pos).getAwards().getInitialMessage());
+
+
 
         mBinding.joinButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -77,9 +79,19 @@ public class PatreonDetailsFragment extends Fragment {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mViewModel.getPatreonTierList().getValue().get(pos).getLink()));
                 startActivity(browserIntent);
             }
-        });/*
-        mBinding.joinButton.setOnClickListener(v -> Toast.makeText(requireContext(),
-                mViewModel.getPatreonTierList().getValue().get(pos).getLink(),Toast.LENGTH_SHORT).show());*/
+        });
 
+        setAwardDetails();
+
+    }
+
+    private void setAwardDetails(){
+
+        int size = mViewModel.getPatreonTierList().getValue().get(pos).getAwards().getAwardsDetails().size();
+
+        for(int i = 0; i < size; i++){
+            mBinding.awardsDetails.append(mViewModel.getPatreonTierList().getValue().get(pos).getAwards().getAwardsDetails().get(i));
+            mBinding.awardsDetails.append("\n\n");
+        }
     }
 }

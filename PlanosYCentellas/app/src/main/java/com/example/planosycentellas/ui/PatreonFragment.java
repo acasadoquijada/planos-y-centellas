@@ -27,7 +27,6 @@ public class PatreonFragment extends Fragment {
     private FragmentPatreonBinding mBinding;
     private HomeViewModel mViewModel;
 
-
     public PatreonFragment() {}
 
     @Override
@@ -55,10 +54,8 @@ public class PatreonFragment extends Fragment {
     }
 
     private void setupUI(List<PatreonTier> patreonTiers){
-        if(patreonTiers.size() != 0){
-            for(int i = 0; i < patreonTiers.size(); i++){
-                setupPatreonTier(patreonTiers.get(i),i);
-            }
+        for(int i = 0; i < patreonTiers.size(); i++){
+            setupPatreonTier(patreonTiers.get(i),i);
         }
     }
 

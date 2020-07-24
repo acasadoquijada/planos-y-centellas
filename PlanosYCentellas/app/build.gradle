@@ -94,7 +94,9 @@ dependencies {
 
     // LeakCanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    def fragment_version = "1.2.5"
 
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
 
 

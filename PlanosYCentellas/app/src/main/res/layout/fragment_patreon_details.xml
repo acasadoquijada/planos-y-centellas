@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="$2 per month + TAX"
+        tools:text="$2 per month + TAX"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/price" />
 
     <TextView
-        android:id="@+id/awards"
+        android:id="@+id/awards_initial_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -68,12 +68,26 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/awards_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/joinButton"
+        tools:text="Recompensas:\n\nCertificado digital personal y numerado que te acredita como Centella oficial de Planos y Centellas. \nAcceso anticipado en vídeo a los programas." />
+
+    <TextView
+        android:id="@+id/awards_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/joinButton"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="Recompensas:\n\nCertificado digital personal y numerado que te acredita como Centella oficial de Planos y Centellas. \nAcceso anticipado en vídeo a los programas." />
+        app:layout_constraintTop_toBottomOf="@+id/awards_initial_message"
+        tools:text="TextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
