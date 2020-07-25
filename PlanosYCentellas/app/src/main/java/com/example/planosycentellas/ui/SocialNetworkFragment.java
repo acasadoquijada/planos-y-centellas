@@ -125,8 +125,15 @@ public class SocialNetworkFragment extends Fragment {
     }
 
     private void launchActivity(String url){
+
+        PackageManager packageManager = requireActivity().getPackageManager();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
-        startActivity(intent);
+
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent);
+        } else{
+            Toast.makeText(requireContext(),"There is an error\nGo to: " + url,Toast.LENGTH_SHORT).show();
+        }
     }
 }

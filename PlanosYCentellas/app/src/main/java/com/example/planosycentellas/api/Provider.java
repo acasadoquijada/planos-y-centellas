@@ -47,7 +47,7 @@ public class Provider {
         }
         return podcastInfo;
     }
-
+    
     public List<Episode> getEpisodes(){
 
         List<Episode> episodeList = new ArrayList<>();
@@ -59,21 +59,43 @@ public class Provider {
             Elements elements = doc.select("item");
 
             for(int i = 0; i < 10; i++){
+
                 Episode episode = new Episode();
 
                 Element e = elements.get(i);
-                episode.setTitle(e.select("title").text());
-                episode.setDescription(e.select("description").text());
-                episode.setUrl(e.select("enclosure").attr("url"));
-                episode.setImage(e.select("itunes|image").attr("href"));
-                episodeList.add(episode);
 
+                episode.setTitle(getEpisodeTitle(e));
+
+                episode.setDescription(getEpisodeDescription(e));
+
+                episode.setUrl(getEpisodeUrl(e));
+
+                episode.setImage(getEpisodeImage(e));
+
+                episodeList.add(episode);
             }
+
         } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
 
         return episodeList;
+    }
+
+    private String getEpisodeTitle(Element element){
+        return element.select("title").text();
+    }
+
+    private String getEpisodeDescription(Element element){
+        return element.select("description").text();
+    }
+
+    private String getEpisodeUrl(Element element){
+        return element.select("enclosure").attr("url");
+    }
+
+    private String getEpisodeImage(Element element){
+        return element.select("itunes|image").attr("href");
     }
 
     public List<String> getUpcoming(){
@@ -87,13 +109,17 @@ public class Provider {
             Elements images = doc.select("div.container.container-xl");
 
             for(int i = 0; i < images.size(); i++){
-                newsList.add(images.get(i).select("div.m-bottom-10").select("a").attr("href"));
+                newsList.add(getUpcomingImage(images.get(i)));
             }
         } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
 
         return newsList;
+    }
+
+    private String getUpcomingImage(Element element){
+        return element.select("div.m-bottom-10").select("a").attr("href");
     }
 
     public List<PatreonTier> getPatreonInfo(){
