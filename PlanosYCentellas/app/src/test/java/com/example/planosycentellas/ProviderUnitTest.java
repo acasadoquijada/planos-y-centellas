@@ -161,7 +161,4 @@ public class ProviderUnitTest {
         List<String> uppcoming = provider.getUpcoming();
         assertFalse(uppcoming.contains(Collections.EMPTY_LIST));
     }
-
-
-
 }

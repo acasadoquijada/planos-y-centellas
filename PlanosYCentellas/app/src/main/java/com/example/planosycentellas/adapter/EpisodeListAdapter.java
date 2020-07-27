@@ -60,6 +60,13 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
         return 0;
     }
 
+    public void clearEpisodes(){
+        if(episodes != null){
+            episodes.clear();
+            notifyDataSetChanged();
+        }
+    }
+
 
     public interface ItemClickListener{
         void onItemClick(int clickedItem);

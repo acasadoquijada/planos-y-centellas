@@ -77,15 +77,18 @@ public class PatreonDetailsFragment extends Fragment {
 
 
     private void setupTitle(){
-        mBinding.title.setText(Objects.requireNonNull(mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getTitle());
+        mBinding.title.setText(Objects.requireNonNull(
+                mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getTitle());
     }
 
     private void setupLogo(){
-        Picasso.get().load(Objects.requireNonNull(mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getImage()).into(mBinding.logo);
+        Picasso.get().load(Objects.requireNonNull(
+                mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getImage()).into(mBinding.logo);
     }
 
     private void setupPrice(){
-        mBinding.price.setText(Objects.requireNonNull(mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getPrice());
+        mBinding.price.setText(Objects.requireNonNull(
+                mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getPrice());
     }
 
     private void setupAwards(){
@@ -95,12 +98,15 @@ public class PatreonDetailsFragment extends Fragment {
 
     private void setAwardInitialMessage(){
         mBinding.awardsInitialMessage.setText(
-                Objects.requireNonNull(mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getAwards().getInitialMessage());
+                Objects.requireNonNull(
+                        mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getAwards().getInitialMessage());
     }
 
     private void setAwardDetails(){
 
-        int size = Objects.requireNonNull(mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getAwards().getAwardsDetails().size();
+        int size =
+                Objects.requireNonNull(
+                        mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getAwards().getAwardsDetails().size();
 
         for(int i = 0; i < size; i++){
             addAwardsDetail(

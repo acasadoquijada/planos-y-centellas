@@ -29,9 +29,7 @@ public class NewsFragment extends Fragment {
     private FragmentNewsBinding mBinding;
     private NewsAdapter adapter;
 
-    public NewsFragment() {
-
-    }
+    public NewsFragment() {}
 
 
     @Override

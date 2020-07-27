@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,6 +115,7 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
         mViewModel.getSearchedEpisodes().observe(getViewLifecycleOwner(), new Observer<List<Episode>>() {
             @Override
             public void onChanged(List<Episode> episodeList) {
+                Log.d("SEARCH__", "I UPDATE EPISODE");
                 adapter.setEpisodes(episodeList);
             }
         });
@@ -136,7 +138,7 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mViewModel.getSearchQuery().setValue(query);
-                searchView.clearFocus();
+               // searchView.clearFocus();
                 return false;
             }
 

@@ -12,7 +12,9 @@ import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.model.PatreonTier;
 import com.example.planosycentellas.model.PodcastInfo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Repository {
 
@@ -62,7 +64,20 @@ public class Repository {
     }
 
     public void searchEpisodes(String query){
-        new FetchSearchEpisodes().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, query);
+
+        if(searchedEpisodes.getValue() != null){
+            searchedEpisodes.getValue().clear();
+        }
+
+        List<Episode> searchEpisodesList = new ArrayList<>();
+
+        for(Episode episode : Objects.requireNonNull(episodeList.getValue())){
+            if(episode.getTitle().toLowerCase().contains(query.toLowerCase())){
+                searchEpisodesList.add(episode);
+            }
+        }
+
+        searchedEpisodes.setValue(searchEpisodesList);
     }
 
     public MutableLiveData<List<Episode>> getSearchedEpisodes(){
@@ -82,7 +97,7 @@ public class Repository {
         }
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     public class FetchNews extends AsyncTask<Void, Void, List<String>> {
         @Override
         protected List<String> doInBackground(Void... voids) {
@@ -117,19 +132,6 @@ public class Repository {
         protected void onPostExecute(PodcastInfo podcast) {
             super.onPostExecute(podcast);
             podcastInfo.setValue(podcast);
-        }
-    }
-    class FetchSearchEpisodes extends AsyncTask<String, Void, List<Episode>>{
-        @Override
-        protected List<Episode> doInBackground(String... strings) {
-
-            return provider.searchEpisodes(strings[0]);
-    }
-
-        @Override
-        protected void onPostExecute(List<Episode> episodeList) {
-            super.onPostExecute(episodeList);
-            searchedEpisodes.setValue(episodeList);
         }
     }
 }

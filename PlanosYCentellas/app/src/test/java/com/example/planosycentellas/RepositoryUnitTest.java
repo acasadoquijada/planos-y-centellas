@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 @RunWith(JUnit4.class)
@@ -48,13 +51,11 @@ public class RepositoryUnitTest{
     @Test
     public void newsIsNotifiedCorrectly() throws InterruptedException {
 
-
         List<String> newsList = new ArrayList<>();
 
         repository.getNews().setValue(newsList);
 
         assertEquals(LiveDataTestUtil.getOrAwaitValue(repository.getNews()), newsList);
-
 
     }
 
@@ -86,6 +87,30 @@ public class RepositoryUnitTest{
         repository.getSearchedEpisodes().setValue(episodes);
 
         assertEquals(LiveDataTestUtil.getOrAwaitValue(repository.getSearchedEpisodes()),episodes);
+    }
+
+    @Test
+    public void searchEpisode(){
+
+        repository.getEpisodes().setValue(createEpisodes());
+
+        String query = "John Wick";
+
+        List<Episode> searchEpisodeList = repository.searchEpisodes(query,"0");
+
+        assertEquals(2,searchEpisodeList.size());
+
+    }
+
+    private List<Episode> createEpisodes(){
+        List<Episode> episodeList = new ArrayList<>();
+
+        Episode e1 = new Episode(); e1.setTitle("John Wick 1"); episodeList.add(e1);
+        Episode e2 = new Episode(); e2.setTitle("John Wick 3"); episodeList.add(e2);
+        Episode e3 = new Episode(); e3.setTitle("Venom"); episodeList.add(e3);
+        Episode e4 = new Episode(); e4.setTitle("Cementerio de animales"); episodeList.add(e4);
+
+        return episodeList;
     }
 
 }

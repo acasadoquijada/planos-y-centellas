@@ -58,7 +58,7 @@ public class Provider {
 
             Elements elements = doc.select("item");
 
-            for(int i = 0; i < 10; i++){
+            for(int i = 0; i < elements.size(); i++){
 
                 Episode episode = new Episode();
 
@@ -208,9 +208,4 @@ public class Provider {
         return "https://www.patreon.com" + element.select(
                 "a.sc-fzoiQi.hrhoNA.ibazdf-0.kYJzfB").attr("href");
     }
-
-    public List<Episode> searchEpisodes(String s){
-        return getEpisodes();
-    }
-
 }
