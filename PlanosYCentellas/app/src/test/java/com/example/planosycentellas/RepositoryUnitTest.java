@@ -18,6 +18,7 @@ import org.junit.runners.JUnit4;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -96,9 +97,9 @@ public class RepositoryUnitTest{
 
         String query = "John Wick";
 
-        List<Episode> searchEpisodeList = repository.searchEpisodes(query,"0");
+        repository.searchEpisodes(query);
 
-        assertEquals(2,searchEpisodeList.size());
+        assertEquals(2, Objects.requireNonNull(repository.getSearchedEpisodes().getValue()).size());
 
     }
 

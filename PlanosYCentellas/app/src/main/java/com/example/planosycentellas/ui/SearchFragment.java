@@ -115,7 +115,6 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
         mViewModel.getSearchedEpisodes().observe(getViewLifecycleOwner(), new Observer<List<Episode>>() {
             @Override
             public void onChanged(List<Episode> episodeList) {
-                Log.d("SEARCH__", "I UPDATE EPISODE");
                 adapter.setEpisodes(episodeList);
             }
         });

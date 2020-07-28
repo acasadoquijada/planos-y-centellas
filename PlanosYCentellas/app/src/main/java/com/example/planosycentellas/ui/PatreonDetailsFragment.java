@@ -77,17 +77,18 @@ public class PatreonDetailsFragment extends Fragment {
 
 
     private void setupTitle(){
-        mBinding.title.setText(Objects.requireNonNull(
+        mBinding.generalDetails.title.setText(Objects.requireNonNull(
                 mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getTitle());
     }
 
     private void setupLogo(){
+
         Picasso.get().load(Objects.requireNonNull(
-                mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getImage()).into(mBinding.logo);
+                mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getImage()).into(mBinding.generalDetails.logo);
     }
 
     private void setupPrice(){
-        mBinding.price.setText(Objects.requireNonNull(
+        mBinding.generalDetails.price.setText(Objects.requireNonNull(
                 mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getPrice());
     }
 
@@ -97,7 +98,7 @@ public class PatreonDetailsFragment extends Fragment {
     }
 
     private void setAwardInitialMessage(){
-        mBinding.awardsInitialMessage.setText(
+        mBinding.awardInformation.description.setText(
                 Objects.requireNonNull(
                         mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getAwards().getInitialMessage());
     }
@@ -115,12 +116,13 @@ public class PatreonDetailsFragment extends Fragment {
     }
 
     private void addAwardsDetail(String awardsDetail){
-        mBinding.awardsDetails.append(awardsDetail);
-        mBinding.awardsDetails.append("\n\n");
+        mBinding.awardInformation.details.append(awardsDetail);
+        mBinding.awardInformation.details.append("\n\n");
     }
 
     private void setupJoinButtonListener(){
-        mBinding.joinButton.setOnClickListener(v -> launchActivity());
+
+        mBinding.generalDetails.joinButton.setOnClickListener(v -> launchActivity());
     }
 
     private void launchActivity(){
@@ -130,6 +132,7 @@ public class PatreonDetailsFragment extends Fragment {
         Intent browserIntent = new Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(Objects.requireNonNull(mViewModel.getPatreonTierList().getValue()).get(patreonTierIndex).getLink()));
+
         if (browserIntent.resolveActivity(packageManager) != null) {
             startActivity(browserIntent);
         } else{
