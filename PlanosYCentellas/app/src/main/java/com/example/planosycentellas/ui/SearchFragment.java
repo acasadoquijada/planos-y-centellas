@@ -22,6 +22,7 @@ import com.example.planosycentellas.adapter.EpisodeListAdapter;
 import com.example.planosycentellas.databinding.FragmentSearchBinding;
 import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.viewmodel.HomeViewModel;
+import com.example.planosycentellas.viewmodel.PlayerViewModel;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
 
     private FragmentSearchBinding mBinding;
     private HomeViewModel mViewModel;
+    private PlayerViewModel playerViewModel;
     private EpisodeListAdapter adapter;
 
     public SearchFragment() { }
@@ -108,6 +110,8 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
 
     private void getViewModel(){
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        playerViewModel =  new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
+
     }
 
     private void observeSearchedEpisodes(){
@@ -150,6 +154,10 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
 
     @Override
     public void onItemClick(int clickedItem) {
-        Toast.makeText(requireContext(),"search " + clickedItem,Toast.LENGTH_SHORT).show();
+
+        Episode episode = mViewModel.getEpisodeList().getValue().get(clickedItem);
+
+        playerViewModel.setEpisode(episode);
+        //   Toast.makeText(requireContext(),""+clickedItem,Toast.LENGTH_SHORT).show();
     }
 }

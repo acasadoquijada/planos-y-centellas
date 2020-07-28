@@ -27,6 +27,7 @@ import com.example.planosycentellas.databinding.FragmentEpisodeBinding;
 import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.repository.Repository;
 import com.example.planosycentellas.viewmodel.HomeViewModel;
+import com.example.planosycentellas.viewmodel.PlayerViewModel;
 
 import java.util.List;
 
@@ -36,9 +37,10 @@ import java.util.List;
  */
 public class EpisodeFragment extends Fragment implements EpisodeListAdapter.ItemClickListener{
 
-private HomeViewModel mViewModel;
-private FragmentEpisodeBinding mBinding;
-private EpisodeListAdapter adapter;
+    private HomeViewModel mViewModel;
+    private PlayerViewModel playerViewModel;
+    private FragmentEpisodeBinding mBinding;
+    private EpisodeListAdapter adapter;
 
     public static EpisodeFragment newInstance(){
             return new EpisodeFragment();
@@ -113,6 +115,7 @@ private EpisodeListAdapter adapter;
 
     private void getViewModel(){
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        playerViewModel =  new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
     }
 
     private void observeEpisodeList(){
@@ -156,7 +159,11 @@ private EpisodeListAdapter adapter;
 
     @Override
     public void onItemClick(int clickedItem){
-        Toast.makeText(requireContext(),""+clickedItem,Toast.LENGTH_SHORT).show();
+
+        Episode episode = mViewModel.getEpisodeList().getValue().get(clickedItem);
+
+        playerViewModel.setEpisode(episode);
+     //   Toast.makeText(requireContext(),""+clickedItem,Toast.LENGTH_SHORT).show();
     }
 }
 
