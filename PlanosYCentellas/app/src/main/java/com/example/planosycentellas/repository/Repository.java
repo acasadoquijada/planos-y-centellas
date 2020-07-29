@@ -1,10 +1,7 @@
 package com.example.planosycentellas.repository;
 
-
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
-import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.planosycentellas.api.Provider;
@@ -12,6 +9,7 @@ import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.model.PatreonTier;
 import com.example.planosycentellas.model.PodcastInfo;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,28 +35,28 @@ public class Repository {
     public MutableLiveData<List<Episode>> getEpisodeList(){
 
         if (episodeList.getValue() == null) {
-            new FetchData().execute();
+            new FetchData(this).execute();
         }
         return episodeList;
     }
 
     public MutableLiveData<List<String>> getNews(){
         if(news.getValue() == null){
-            new FetchNews().execute();
+            new FetchNews(this).execute();
         }
         return news;
     }
 
     public MutableLiveData<List<PatreonTier>> getPatreonTierList(){
         if(patreonTierList.getValue() == null){
-            new FetchPatreonTierInfo().execute();
+            new FetchPatreonTierInfo(this).execute();
         }
         return patreonTierList;
     }
 
     public MutableLiveData<PodcastInfo> getPodcastInfo(){
         if(podcastInfo.getValue() == null){
-            new FetchPodcastInfo().execute();
+            new FetchPodcastInfo(this).execute();
         }
         return podcastInfo;
     }
@@ -81,61 +79,88 @@ public class Repository {
     }
 
     public Episode getEpisode(int index){
-
-        if(episodeList.getValue().size() > index){
+        if(Objects.requireNonNull(episodeList.getValue()).size() > index){
             return episodeList.getValue().get(index);
         }
         return new Episode();
     }
 
-    class FetchData extends AsyncTask<Void, Void, List<Episode>> {
+    private static class FetchData extends AsyncTask<Void, Void, List<Episode>> {
+
+        private WeakReference<Repository> repositoryReference;
+
+        public FetchData(Repository repository){
+            repositoryReference = new WeakReference<>(repository);
+        }
+
         @Override
         protected List<Episode> doInBackground(Void... voids) {
-            return provider.getEpisodes();
+            return repositoryReference.get().provider.getEpisodes();
         }
 
         @Override
         protected void onPostExecute(List<Episode> episodes) {
             super.onPostExecute(episodes);
-            episodeList.setValue(episodes);
+            repositoryReference.get().episodeList.setValue(episodes);
         }
     }
 
-    @VisibleForTesting()
-    public class FetchNews extends AsyncTask<Void, Void, List<String>> {
+    private static class FetchNews extends AsyncTask<Void, Void, List<String>> {
+
+        private WeakReference<Repository> repositoryReference;
+
+        public FetchNews(Repository repository){
+            repositoryReference = new WeakReference<>(repository);
+        }
+
         @Override
         protected List<String> doInBackground(Void... voids) {
-            return provider.getUpcoming();
+            return repositoryReference.get().provider.getUpcoming();
         }
 
         @Override
         protected void onPostExecute(List<String> strings) {
             super.onPostExecute(strings);
-            news.setValue(strings);
+            repositoryReference.get().news.setValue(strings);
         }
     }
-    class FetchPatreonTierInfo extends AsyncTask<Void, Void, List<PatreonTier>> {
+
+    private static class FetchPatreonTierInfo extends AsyncTask<Void, Void, List<PatreonTier>> {
+
+        private WeakReference<Repository> repositoryReference;
+
+        public FetchPatreonTierInfo(Repository repository){
+            repositoryReference = new WeakReference<>(repository);
+        }
+
         @Override
         protected List<PatreonTier> doInBackground(Void... voids) {
-            return provider.getPatreonInfo();
+            return repositoryReference.get().provider.getPatreonInfo();
         }
 
         @Override
         protected void onPostExecute(List<PatreonTier> patreonList) {
             super.onPostExecute(patreonList);
-            patreonTierList.setValue(patreonList);
+            repositoryReference.get().patreonTierList.setValue(patreonList);
         }
     }
-    class FetchPodcastInfo extends AsyncTask<Void, Void, PodcastInfo>{
+
+    public static class FetchPodcastInfo extends AsyncTask<Void, Void, PodcastInfo>{
+
+        private WeakReference<Repository> repositoryReference;
+
+        public FetchPodcastInfo(Repository repository){
+            repositoryReference = new WeakReference<>(repository);
+        }
         @Override
         protected PodcastInfo doInBackground(Void... voids) {
-            return provider.getPodcastInfo();
+            return repositoryReference.get().provider.getPodcastInfo();
         }
 
         @Override
         protected void onPostExecute(PodcastInfo podcast) {
             super.onPostExecute(podcast);
-            podcastInfo.setValue(podcast);
+            repositoryReference.get().podcastInfo.setValue(podcast);
         }
     }
 }
