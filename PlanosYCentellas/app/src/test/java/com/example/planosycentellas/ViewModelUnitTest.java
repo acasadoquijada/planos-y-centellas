@@ -89,5 +89,4 @@ public class ViewModelUnitTest {
 
         assertEquals(LiveDataTestUtil.getOrAwaitValue(viewModel.getSearchedEpisodes()), episodes);
     }
-
 }

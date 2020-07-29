@@ -34,7 +34,7 @@ public class Repository {
         searchedEpisodes = new MutableLiveData<>();
     }
 
-    public MutableLiveData<List<Episode>> getEpisodes(){
+    public MutableLiveData<List<Episode>> getEpisodeList(){
 
         if (episodeList.getValue() == null) {
             new FetchData().execute();
@@ -65,10 +65,6 @@ public class Repository {
 
     public void searchEpisodes(String query){
 
-        if(searchedEpisodes.getValue() != null){
-            searchedEpisodes.getValue().clear();
-        }
-
         List<Episode> searchEpisodesList = new ArrayList<>();
 
         for(Episode episode : Objects.requireNonNull(episodeList.getValue())){
@@ -82,6 +78,14 @@ public class Repository {
 
     public MutableLiveData<List<Episode>> getSearchedEpisodes(){
         return searchedEpisodes;
+    }
+
+    public Episode getEpisode(int index){
+
+        if(episodeList.getValue().size() > index){
+            return episodeList.getValue().get(index);
+        }
+        return new Episode();
     }
 
     class FetchData extends AsyncTask<Void, Void, List<Episode>> {

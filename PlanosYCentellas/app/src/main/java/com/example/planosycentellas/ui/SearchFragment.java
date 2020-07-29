@@ -155,7 +155,7 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
     @Override
     public void onItemClick(int clickedItem) {
 
-        Episode episode = mViewModel.getEpisodeList().getValue().get(clickedItem);
+        Episode episode = mViewModel.getEpisode(clickedItem);
 
         playerViewModel.setEpisode(episode);
         //   Toast.makeText(requireContext(),""+clickedItem,Toast.LENGTH_SHORT).show();

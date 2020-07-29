@@ -9,7 +9,12 @@ public class Episode {
     private String url;
     private String image;
 
-    public Episode(){};
+    public Episode(){
+        title = "";
+        description = "";
+        url = "";
+        image = "";
+    };
 
     public void setTitle(String title) {
         this.title = title;

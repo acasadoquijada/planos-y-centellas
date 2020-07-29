@@ -18,13 +18,18 @@ public class HomeViewModel extends ViewModel {
     public Repository repository;
 
     private MutableLiveData<String> searchQuery;
+
     public HomeViewModel(){
         repository = new Repository();
         searchQuery = new MutableLiveData<>();
     }
 
+    public Episode getEpisode(int index){
+        return repository.getEpisode(index);
+    }
+
     public MutableLiveData<List<Episode>> getEpisodeList(){
-        return repository.getEpisodes();
+        return repository.getEpisodeList();
     }
 
     public MutableLiveData<List<String>> getNewsList(){

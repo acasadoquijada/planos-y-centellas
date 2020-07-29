@@ -44,9 +44,9 @@ public class RepositoryUnitTest{
 
         List<Episode> episodes = new ArrayList<>();
 
-        repository.getEpisodes().setValue(episodes);
+        repository.getEpisodeList().setValue(episodes);
 
-        assertEquals(LiveDataTestUtil.getOrAwaitValue(repository.getEpisodes()),episodes);
+        assertEquals(LiveDataTestUtil.getOrAwaitValue(repository.getEpisodeList()),episodes);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class RepositoryUnitTest{
     @Test
     public void searchEpisode(){
 
-        repository.getEpisodes().setValue(createEpisodes());
+        repository.getEpisodeList().setValue(createEpisodes());
 
         String query = "John Wick";
 
@@ -112,6 +112,27 @@ public class RepositoryUnitTest{
         Episode e4 = new Episode(); e4.setTitle("Cementerio de animales"); episodeList.add(e4);
 
         return episodeList;
+    }
+
+    @Test
+    public void getEpisodeReturnActualData(){
+
+        repository.getEpisodeList().setValue(createEpisodes());
+
+        Episode episode = repository.getEpisode(0);
+
+        assertEquals(episode.getTitle(),"John Wick 1");
+
+    }
+
+    @Test
+    public void getEpisodeReturnEmptyObject(){
+
+        repository.getEpisodeList().setValue(createEpisodes());
+
+        Episode episode = repository.getEpisode(10);
+
+        assertEquals(episode.getTitle(),"");
     }
 
 }
