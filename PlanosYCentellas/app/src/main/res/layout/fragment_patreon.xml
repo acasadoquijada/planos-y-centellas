@@ -7,38 +7,57 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".ui.PatreonFragment">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.PatreonFragment">
 
-    <TextView
-        android:id="@+id/patreonLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/patreon_label_text"
-        tools:text="@string/patreon_label_text" />
-    <include
-        android:id="@+id/patreonTier1"
-        layout="@layout/patreon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/patreonTier1"
+                layout="@layout/patreon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/patreonLabel" />
 
-    <include
-        android:id="@+id/patreonTier2"
-        layout="@layout/patreon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/patreonTier2"
+                layout="@layout/patreon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/patreonLabel" />
 
-    <include
-        android:id="@+id/patreonTier3"
-        layout="@layout/patreon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/patreonTier3"
+                layout="@layout/patreon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/patreonTier2"
+                app:layout_constraintHorizontal_bias="0.533"
+                app:layout_constraintStart_toEndOf="@+id/patreonTier1"
+                app:layout_constraintTop_toBottomOf="@+id/patreonTier1" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/patreonLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:text="@string/patreon_label_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="TextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

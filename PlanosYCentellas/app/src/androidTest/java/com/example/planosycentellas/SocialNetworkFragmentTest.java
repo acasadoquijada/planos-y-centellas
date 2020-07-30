@@ -75,6 +75,12 @@ public class SocialNetworkFragmentTest {
         checkIntentContent("https://www.facebook.com/pages/category/Podcast/Planos-y-Centellas-1950069131742290/");
     }
 
+    @Test
+    public void checkSpotifyImageButton(){
+        onView(withId(R.id.spotify)).perform(click());
+        checkIntentContent("https://open.spotify.com/show/78SRCbyUZei41U33ZkVDme");
+    }
+
     private void checkIntentContent(String url){
         intended(hasAction(Intent.ACTION_VIEW));
         intended(hasData(url));

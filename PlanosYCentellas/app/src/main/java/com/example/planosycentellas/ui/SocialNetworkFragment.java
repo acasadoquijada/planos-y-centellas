@@ -32,6 +32,7 @@ public class SocialNetworkFragment extends Fragment {
     private final String facebook = "facebook";
     private final String itunes = "itunes";
     private final String twitter = "twitter";
+    private final String spotify = "spotify";
 
     public SocialNetworkFragment() {
     }
@@ -62,6 +63,7 @@ public class SocialNetworkFragment extends Fragment {
         setupOnClickListenerInstagram();
         setupOnClickListenerItunes();
         setupOnClickListenerFacebook();
+        setupOnClickListenerSpotify();
     }
 
     private void setupOnClickListener(String socialNetwork) {
@@ -94,6 +96,10 @@ public class SocialNetworkFragment extends Fragment {
                 socialNetworkImageView = mBinding.facebook;
                 url = "https://www.facebook.com/pages/category/Podcast/Planos-y-Centellas-1950069131742290/";
                 break;
+            case spotify:
+                socialNetworkImageView = mBinding.spotify;
+                url = "https://open.spotify.com/show/78SRCbyUZei41U33ZkVDme";
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + socialNetwork);
         }
@@ -123,6 +129,8 @@ public class SocialNetworkFragment extends Fragment {
     private void setupOnClickListenerFacebook(){
         setupOnClickListener(facebook);
     }
+
+    private void setupOnClickListenerSpotify(){ setupOnClickListener(spotify);}
 
     private void launchActivity(String url){
 

@@ -27,11 +27,11 @@ A list with the episodes published by Planos y Centellas in Ivoox. TBD if the us
 
 In this section, the user will see the upcoming episodes for the current week
 
-## Social Networks
+### Social Networks
 
 Contains all the Planos y Centellas social networks, go ahead and subscribe to not miss anything!
 
-## Patreon
+### Patreon
 
 In this section, the awards of being a patreon member and displayed. It also bring the posibility to the user to go to Patreon.com and become one!
 
@@ -68,7 +68,8 @@ In addition to this, LeakCanary is used for checking posible memory leaks
 * [Swipe Layout](https://github.com/rambler-digital-solutions/swipe-layout-android)
 * [Exoplayer](https://github.com/google/ExoPlayer)
 * [Jsoup](https://jsoup.org/)
-* [Picasso] (https://github.com/square/picasso)
+* [Picasso](https://github.com/square/picasso)
+* [TouchImageView](https://github.com/MikeOrtiz/TouchImageView)
 * [LeakCanary](https://github.com/square/leakcanary)
 
 
@@ -77,6 +78,8 @@ In addition to this, LeakCanary is used for checking posible memory leaks
 * Youtube logo made by [Freepik](http://www.freepik.com/) in [Flaticon](https://www.flaticon.com/)
 
 * Instagram logo made by [Freepik](http://www.freepik.com/) in [Flaticon](https://www.flaticon.com/)
+
+* Spotify logo made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect/) in [Flaticon](https://www.flaticon.com/)
 
 * Patreon logo made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect/) in [Flaticon](https://www.flaticon.com/)
 
