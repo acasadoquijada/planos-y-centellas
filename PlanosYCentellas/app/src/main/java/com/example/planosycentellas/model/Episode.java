@@ -16,6 +16,13 @@ public class Episode {
         image = "";
     };
 
+    public Episode(Episode episode){
+        title = episode.getTitle();
+        description = episode.getDescription();
+        url = episode.getUrl();
+        image = episode.getImage();
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -46,6 +53,23 @@ public class Episode {
 
     public String getImage() {
         return image;
+    }
+
+    public boolean isEmpty(){
+
+        boolean a = title.isEmpty();
+        boolean b = description.isEmpty();
+        boolean c = !(url.contains("https") || url.contains("http"));
+        boolean d = !(image.contains("https") || image.contains("http"));
+
+        return a && b && c && d;
+    }
+
+    public void clean(){
+        title = "";
+        description = "";
+        url = "";
+        image = "";
     }
 
     @NonNull

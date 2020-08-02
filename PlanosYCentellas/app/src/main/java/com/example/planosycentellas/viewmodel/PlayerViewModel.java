@@ -2,49 +2,52 @@ package com.example.planosycentellas.viewmodel;
 
 import android.app.Application;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LifecycleOwnerKt;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.OnLifecycleEvent;
-import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.example.planosycentellas.model.Episode;
-import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 
 import java.util.Objects;
 
-public class PlayerViewModel extends AndroidViewModel implements LifecycleObserver {
-
+public class PlayerViewModel extends AndroidViewModel {
 
     private MutableLiveData<Episode> episode;
 
+    private long currentPosition;
+    private ExoPlayer player;
+    private MediaSource mediaSource;
+    private boolean playWhenReady;
+
     public PlayerViewModel(@NonNull Application application) {
         super(application);
-
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
-
+        player = new SimpleExoPlayer.Builder(getApplication()).build();
         episode = new MutableLiveData<>();
-
+        currentPosition = 0;
+        playWhenReady = true;
     }
 
-
     public void setupAudio() {
+        if(episode.getValue() != null && !Objects.requireNonNull(episode.getValue()).getUrl().equals("")){
+            if (currentPosition != 0) {
+                player.prepare(mediaSource);
+                player.seekTo(currentPosition);
+            } else {
+                mediaSource = buildMediaSource(episode.getValue().getUrl());
+                player.prepare(mediaSource);
+                player.seekTo(currentPosition);
+            }
+            player.setPlayWhenReady(playWhenReady);
+        }
     }
 
     public LiveData<Episode> getEpisode() {
@@ -52,9 +55,9 @@ public class PlayerViewModel extends AndroidViewModel implements LifecycleObserv
     }
 
     public void setEpisode(Episode episode) {
-        this.episode.setValue(episode);
-    }
 
+        this.episode.setValue(new Episode(episode));
+    }
 
     private MediaSource buildMediaSource(String url) {
         Uri uri = Uri.parse(url);
@@ -64,30 +67,35 @@ public class PlayerViewModel extends AndroidViewModel implements LifecycleObserv
                 .createMediaSource(uri);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    private void onAppForegrounded(){
-        setupPlayer();
+    public void clean(){
+        stopPlayer();
+        currentPosition = 0;
+        player.seekTo(currentPosition);
+        playWhenReady = true;
+        episode.getValue().clean();
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    private void onAppBackgrounded(){
+    public ExoPlayer getPlayer(){
+        return player;
+    }
+
+    public void releasePlayer(){
+        currentPosition = player.getCurrentPosition();
+        playWhenReady = player.getPlayWhenReady();
+        player.stop();
+    }
+
+    public void stopPlayer(){
+        if(player != null){
+            player.stop();
+        }
+    }
+
+    public void onPause(){
         releasePlayer();
     }
 
-    private void setupPlayer(){
+    public void onResume(){
         setupAudio();
-    }
-
-    private void releasePlayer(){
-/*        currentPosition = player.getValue().getCurrentPosition();
-        playWhenReady = player.getValue().getPlayWhenReady();
-        player.getValue().release();*/
-    }
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        releasePlayer();
-        ProcessLifecycleOwner.get().getLifecycle().removeObserver(this);
     }
 }

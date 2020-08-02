@@ -8,17 +8,19 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.planosycentellas.databinding.ActivityMainBinding;
 import com.example.planosycentellas.viewmodel.PlayerViewModel;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
 
 import ru.rambler.libs.swipe_layout.SwipeLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ExoPlayer.EventListener {
 
     private ActivityMainBinding mBinding;
     private PlayerViewModel playerViewModel;
@@ -27,9 +29,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setupDataBinding();
+
         setUpBottonNavigation();
+
         setupReproducerViewModel();
+
+        setExoPlayerInPlayerView();
 
         setupSlidingUpPanel();
 
@@ -51,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSwipeClampReached(SwipeLayout swipeLayout, boolean moveToRight) {
                 if(!moveToRight){
                     hideSlidingPanel();
+                    playerViewModel.clean();
+                 //   playerViewModel.onPause();
                 }
             }
 
@@ -74,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupPanelSlideListener(){
-
         mBinding.slidingLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -150,12 +158,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setSlidingPanelState(SlidingUpPanelLayout.PanelState state){
+        Log.d("TESTING__", "The panel state is: " + state);
         mBinding.slidingLayout.setPanelState(state);
     }
 
     private void setupReproducerViewModel(){
         getViewModel();
         observeEpisode();
+
+    }
+
+    private void setupAudio(){
+
+      //  Log.d("TESTING__", "SLIDING STATE: " + mBinding.slidingLayout.getPanelState().toString());
+
+   /*     if(mBinding.slidingLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED ||
+                mBinding.slidingLayout.getPanelState() == SlidingUpPanelLayout.PanelState.DRAGGING) {*/
+            playerViewModel.setupAudio();
+     //   }
     }
 
     private void getViewModel(){
@@ -164,11 +184,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void observeEpisode(){
         playerViewModel.getEpisode().observe(this, episode ->{
-            showSlidingPanel();
-            setImages(episode.getImage());
-            setDescription(episode.getDescription());
-            setName(episode.getTitle());
+            Log.d("TESTING__", "I OBSERVED THE EPISODE");
+            
+            if(!episode.isEmpty()){
+                setImages(episode.getImage());
+                setDescription(episode.getDescription());
+                setName(episode.getTitle());
+                setupAudio();
+                showSlidingPanel();
+            }
         });
+    }
+
+    private void setExoPlayerInPlayerView(){
+        mBinding.reproducer.mainMediaReproducer.setPlayer(playerViewModel.getPlayer());
+        playerViewModel.getPlayer().addListener(this);
     }
 
     private void setImages(String image){
@@ -183,6 +213,18 @@ public class MainActivity extends AppCompatActivity {
     private void setName(String name){
         mBinding.reproducer.reproducerSlidingPanel.slidingName.setText(name);
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        playerViewModel.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        playerViewModel.onResume();
     }
 
 }
