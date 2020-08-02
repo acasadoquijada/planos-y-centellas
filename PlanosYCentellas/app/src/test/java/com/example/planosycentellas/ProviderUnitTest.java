@@ -158,7 +158,8 @@ public class ProviderUnitTest {
 
     private void getUpconming(String url){
         provider.ivoox_news_url = url;
-        List<String> uppcoming = provider.getUpcoming();
-        assertFalse(uppcoming.contains(Collections.EMPTY_LIST));
+        String uppcoming = provider.getUpcoming();
+
+        assertTrue(uppcoming.contains("https") || uppcoming.contains("http"));
     }
 }

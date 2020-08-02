@@ -52,7 +52,7 @@ public class ViewModelUnitTest {
     @Test
     public void newsListIsNotifiedCorrectly() throws InterruptedException {
 
-        List<String> newsList = new ArrayList<>();
+        String newsList =  "ArrayList<>()";
 
         viewModel.getNewsList().setValue(newsList);
 

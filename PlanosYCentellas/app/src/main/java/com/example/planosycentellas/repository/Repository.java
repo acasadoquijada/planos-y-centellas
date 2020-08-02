@@ -8,6 +8,7 @@ import com.example.planosycentellas.api.Provider;
 import com.example.planosycentellas.model.Episode;
 import com.example.planosycentellas.model.PatreonTier;
 import com.example.planosycentellas.model.PodcastInfo;
+import com.google.android.exoplayer2.ExoPlayer;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Repository {
 
     private Provider provider;
     private MutableLiveData<List<Episode>> episodeList;
-    private MutableLiveData<List<String>> news;
+    private MutableLiveData<String> news;
     private MutableLiveData<List<PatreonTier>> patreonTierList;
     private MutableLiveData<PodcastInfo> podcastInfo;
     private MutableLiveData<List<Episode>> searchedEpisodes;
@@ -40,7 +41,7 @@ public class Repository {
         return episodeList;
     }
 
-    public MutableLiveData<List<String>> getNews(){
+    public MutableLiveData<String> getNews(){
         if(news.getValue() == null){
             new FetchNews(this).execute();
         }
@@ -105,7 +106,7 @@ public class Repository {
         }
     }
 
-    private static class FetchNews extends AsyncTask<Void, Void, List<String>> {
+    private static class FetchNews extends AsyncTask<Void, Void, String> {
 
         private WeakReference<Repository> repositoryReference;
 
@@ -114,12 +115,12 @@ public class Repository {
         }
 
         @Override
-        protected List<String> doInBackground(Void... voids) {
+        protected String doInBackground(Void... voids) {
             return repositoryReference.get().provider.getUpcoming();
         }
 
         @Override
-        protected void onPostExecute(List<String> strings) {
+        protected void onPostExecute(String strings) {
             super.onPostExecute(strings);
             repositoryReference.get().news.setValue(strings);
         }

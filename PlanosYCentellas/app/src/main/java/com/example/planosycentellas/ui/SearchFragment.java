@@ -115,13 +115,24 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
     }
 
     private void observeSearchedEpisodes(){
+        mViewModel.getSearchedEpisodes().observe(getViewLifecycleOwner(),
+                this::handleEpisodeList);
+    }
 
-        mViewModel.getSearchedEpisodes().observe(getViewLifecycleOwner(), new Observer<List<Episode>>() {
-            @Override
-            public void onChanged(List<Episode> episodeList) {
-                adapter.setEpisodes(episodeList);
-            }
-        });
+    private void handleEpisodeList(List<Episode> episodeList){
+        if(episodeList.size() > 0){
+            setEpisodes(episodeList);
+        } else {
+            showToast();
+        }
+    }
+
+    private void showToast(){
+        Toast.makeText(requireContext(),"No hay episodios correspondientes a tu busqueda",Toast.LENGTH_SHORT).show();
+    }
+
+    private void setEpisodes(List<Episode> episodeList){
+        adapter.setEpisodes(episodeList);
     }
     private void observeSearchQuery(){
         mViewModel.getSearchQuery().observe(getViewLifecycleOwner(), s -> mViewModel.searchEpisodes());
@@ -154,10 +165,6 @@ public class SearchFragment extends Fragment implements EpisodeListAdapter.ItemC
 
     @Override
     public void onItemClick(int clickedItem) {
-
-        Episode episode = mViewModel.getEpisode(clickedItem);
-
-        playerViewModel.setEpisode(episode);
-        //   Toast.makeText(requireContext(),""+clickedItem,Toast.LENGTH_SHORT).show();
+        playerViewModel.setEpisode(mViewModel.getEpisode(clickedItem));
     }
 }

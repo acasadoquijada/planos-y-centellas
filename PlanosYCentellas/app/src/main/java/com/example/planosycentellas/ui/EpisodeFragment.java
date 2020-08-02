@@ -159,8 +159,7 @@ public class EpisodeFragment extends Fragment implements EpisodeListAdapter.Item
 
     @Override
     public void onItemClick(int clickedItem){
-        Episode episode = mViewModel.getEpisode(clickedItem);
-        playerViewModel.setEpisode(episode);
+        playerViewModel.setEpisode(mViewModel.getEpisode(clickedItem));
     }
 }
 

@@ -62,7 +62,9 @@ public class EpisodeListAdapter extends RecyclerView.Adapter<EpisodeListAdapter.
 
     public void clearEpisodes(){
         if(episodes != null){
+            int size = episodes.size();
             episodes.clear();
+            notifyItemRangeRemoved(0,size);
             notifyDataSetChanged();
         }
     }
