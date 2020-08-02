@@ -70,16 +70,13 @@ public class EpisodeFragment extends Fragment implements EpisodeListAdapter.Item
         setupAdapter();
     }
 
-
     private void setupLayoutManager(){
         getRecyclerView().setLayoutManager(createGridLayoutManager());
     }
 
     private GridLayoutManager createGridLayoutManager(){
         GridLayoutManager manager = new GridLayoutManager(getContext(),1);
-
         manager.setOrientation(RecyclerView.VERTICAL);
-
         return manager;
     }
 

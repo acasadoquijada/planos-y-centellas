@@ -20,12 +20,14 @@ import com.example.planosycentellas.R;
 import com.example.planosycentellas.databinding.FragmentSocialNetworkBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SocialNetworkFragment extends Fragment {
 
     private FragmentSocialNetworkBinding mBinding;
 
+    private List<String> socialNetworkList;
     private final String ivoox = "ivoox";
     private final String instagram = "instagram";
     private final String youtube = "youtube";
@@ -35,6 +37,18 @@ public class SocialNetworkFragment extends Fragment {
     private final String spotify = "spotify";
 
     public SocialNetworkFragment() {
+
+    }
+
+    private void setupSocialLinkList(){
+        socialNetworkList = new ArrayList<>();
+        socialNetworkList.add(ivoox);
+        socialNetworkList.add(instagram);
+        socialNetworkList.add(youtube);
+        socialNetworkList.add(facebook);
+        socialNetworkList.add(itunes);
+        socialNetworkList.add(twitter);
+        socialNetworkList.add(spotify);
     }
 
     @Override
@@ -42,6 +56,8 @@ public class SocialNetworkFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         setupDataBinding(inflater, container);
+
+        setupSocialLinkList();
 
         setupOnClickListenerSocialNetworks();
 
@@ -57,13 +73,9 @@ public class SocialNetworkFragment extends Fragment {
     }
 
     private void setupOnClickListenerSocialNetworks(){
-        setupOnClickListenerIvoox();
-        setupOnClickListenerYoutube();
-        setupOnClickListenerTwitter();
-        setupOnClickListenerInstagram();
-        setupOnClickListenerItunes();
-        setupOnClickListenerFacebook();
-        setupOnClickListenerSpotify();
+        for(String socialNetwork: socialNetworkList){
+            setupOnClickListener(socialNetwork);
+        }
     }
 
     private void setupOnClickListener(String socialNetwork) {
@@ -107,30 +119,6 @@ public class SocialNetworkFragment extends Fragment {
         socialNetworkImageView.setOnClickListener(v -> launchActivity(url));
 
     }
-
-    private void setupOnClickListenerIvoox(){
-        setupOnClickListener(ivoox);
-    }
-
-    private void setupOnClickListenerYoutube(){
-        setupOnClickListener(youtube);
-    }
-
-    private void setupOnClickListenerInstagram(){
-        setupOnClickListener(instagram);
-    }
-
-    private void setupOnClickListenerItunes(){
-        setupOnClickListener(itunes);
-    }
-
-    private void setupOnClickListenerTwitter(){ setupOnClickListener(twitter); }
-
-    private void setupOnClickListenerFacebook(){
-        setupOnClickListener(facebook);
-    }
-
-    private void setupOnClickListenerSpotify(){ setupOnClickListener(spotify);}
 
     private void launchActivity(String url){
 

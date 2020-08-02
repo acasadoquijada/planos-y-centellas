@@ -34,15 +34,39 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_news,container,false);
+        setupDataBinding(inflater,container);
 
+        return getViewRoot();
+    }
+
+    private void setupDataBinding(LayoutInflater inflater,ViewGroup container){
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_news,container,false);
+    }
+
+    private View getViewRoot(){
         return mBinding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setupViewModel();
+    }
+
+    private void setupViewModel() {
+        getViewModel();
+        observeNewsImage();
+    }
+
+    private void getViewModel(){
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
-        mViewModel.getNewsList().observe(getViewLifecycleOwner(), s -> Picasso.get().load(s).into(mBinding.newsImage));
+    }
+
+    private void observeNewsImage(){
+        mViewModel.getNewsList().observe(getViewLifecycleOwner(), this::loadImage);
+    }
+
+    private void loadImage(String image) {
+        Picasso.get().load(image).into(mBinding.newsImage);
     }
 }

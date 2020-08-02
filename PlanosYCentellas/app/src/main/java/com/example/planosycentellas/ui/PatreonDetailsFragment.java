@@ -136,7 +136,13 @@ public class PatreonDetailsFragment extends Fragment {
         if (browserIntent.resolveActivity(packageManager) != null) {
             startActivity(browserIntent);
         } else{
-            Toast.makeText(requireContext(),"There is an error with the patreon link.\nPlease go to https://www.patreon.com/planosycentellas", Toast.LENGTH_LONG).show();
+            showNotFoundMessage();
         }
+    }
+
+    private void showNotFoundMessage(){
+        Toast.makeText(requireContext(),
+                "There is an error with the patreon link.\nPlease go to https://www.patreon.com/planosycentellas", Toast.LENGTH_LONG).show();
+
     }
 }

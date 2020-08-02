@@ -25,11 +25,11 @@ public class Repository {
     private MutableLiveData<List<Episode>> searchedEpisodes;
 
     public Repository(){
+        news = new MutableLiveData<>();
         provider = new Provider();
         episodeList = new MutableLiveData<>();
-        news = new MutableLiveData<>();
-        patreonTierList = new MutableLiveData<>();
         podcastInfo = new MutableLiveData<>();
+        patreonTierList = new MutableLiveData<>();
         searchedEpisodes = new MutableLiveData<>();
     }
 

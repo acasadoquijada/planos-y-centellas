@@ -8,6 +8,14 @@ public class PatreonTier {
     private PatreonAwards awards;
     private String link;
 
+    public PatreonTier(){
+        title = "";
+        image= "";
+        price= "";
+        awards = new PatreonAwards();
+        link= "";
+    }
+
     public String getImage() {
         return image;
     }

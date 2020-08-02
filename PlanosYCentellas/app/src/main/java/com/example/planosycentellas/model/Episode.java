@@ -56,13 +56,23 @@ public class Episode {
     }
 
     public boolean isEmpty(){
+        return titleIsEmpty() && descriptionIsEmpty() && urlIsEmpty() && imageIsEmpty();
+    }
 
-        boolean a = title.isEmpty();
-        boolean b = description.isEmpty();
-        boolean c = !(url.contains("https") || url.contains("http"));
-        boolean d = !(image.contains("https") || image.contains("http"));
+    private boolean titleIsEmpty(){
+        return title.isEmpty();
+    }
 
-        return a && b && c && d;
+    private  boolean descriptionIsEmpty(){
+        return description.isEmpty();
+    }
+
+    private boolean urlIsEmpty(){
+        return url.isEmpty();
+    }
+
+    private boolean imageIsEmpty(){
+       return image.isEmpty();
     }
 
     public void clean(){
