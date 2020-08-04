@@ -65,6 +65,11 @@ Please check [here](resources/docs/testing/english.md) for more information abou
 
 In addition to this, LeakCanary is used for checking posible memory leaks
 
+
+### Screenshots
+
+![main](resources/img/main.png) ![episode](resources/img/episode.png)
+![news](resources/img/news.png) ![main](resources/img/socialnetworks.png)
 ### Libraries
 
 * [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
