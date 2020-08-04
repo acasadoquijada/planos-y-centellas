@@ -1,8 +1,11 @@
 # Planos y Centellas
 
-See here spanish readme. //TODO
+![Planos y Centellas logo](\resources\img\planos_y_centellas_logo.png)
 
-Planos y Centellas is a podcast about movies and series by Juan Hernandez y Manu Vacas. You can find more information about it in its [Ivoox webpage](https://www.ivoox.com/podcast-planos-centellas_sq_f1609149_1.html)
+
+Planos y Centellas is a podcast about movies and series by Juan Hernandez y Manu Vacas. You can find more information about it in its [Ivoox webpage](https://www.ivoox.com/podcast-planos-centellas_sq_f1609149_1.html).
+
+The purpose of this application is to gather all the relevant information about this podcast in the same place.
 
 
 ## Application description
@@ -41,9 +44,11 @@ In this section the tecnical details about the app are going to be discussed.
 
 ### Architecture
 
-The application is made of 1 activity and several fragment following the single Activity pattern. For the navigation between them the Navigation Component is used.
+The application contains 1 activity and some fragments, following the single Activity pattern. For the app navigation the Navigation Component is used.
 
-The architecture selected is Model-View-ViewModel (MVVM). There is only a ViewModel (HomeViewModel) instance shared by all the Fragments.This ViewModel uses a Repository class (Repository) to obtain the data. Equally, the Repository class uses a Provider class in order to achieve the required data.
+The architecture selected is Model-View-ViewModel (MVVM). There is a ViewModel (HomeViewModel) instance shared by all the Fragments. This ViewModel uses a Repository class (Repository) to obtain the data. Equally, the Repository class uses a Provider class in order to achieve the required data.
+
+In addition to this, there is a second ViewModel (PlayerViewModel) that handles all the operations related to the media player in order to reproduce the episodes.
 
 This is a clear implementation of the MVVM patter as it can be seeing [here](https://developer.android.com/jetpack/guide)
 
@@ -59,7 +64,6 @@ In order to obtain the data, web scrapping is performed in different webpages. F
 Please check [here](resources/docs/testing/english.md) for more information about the testing strategy followed.
 
 In addition to this, LeakCanary is used for checking posible memory leaks
-
 
 ### Libraries
 
