@@ -1,9 +1,7 @@
 package com.example.planosycentellas.ui;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.planosycentellas.R;
 import com.example.planosycentellas.databinding.FragmentSocialNetworkBinding;
-import com.squareup.picasso.Picasso;
+import com.example.planosycentellas.model.SocialNetwork;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,8 @@ public class SocialNetworkFragment extends Fragment {
 
     private FragmentSocialNetworkBinding mBinding;
 
-    private List<String> socialNetworkList;
+    private List<SocialNetwork> socialNetworkList;
+
     private final String ivoox = "ivoox";
     private final String instagram = "instagram";
     private final String youtube = "youtube";
@@ -36,19 +35,29 @@ public class SocialNetworkFragment extends Fragment {
     private final String twitter = "twitter";
     private final String spotify = "spotify";
 
-    public SocialNetworkFragment() {
+    private final String ivoox_url = "https://www.ivoox.com/podcast-planos-centellas_sq_f1609149_1.html";
+    private final String youtube_url = "https://www.youtube.com/channel/UCLacP2BYwAAJISa7-fAj64g";
+    private final String twitter_url = "https://twitter.com/planoscentellas?lang=en";
+    private final String instagram_url = "https://www.instagram.com/planos_y_centellas/?hl=en";
+    private final String itunes_url = "https://podcasts.apple.com/us/podcast/planos-y-centellas/id1444091704";
+    private final String facebook_url = "https://www.facebook.com/pages/category/Podcast/Planos-y-Centellas-1950069131742290/";
+    private final String spotify_url = "https://open.spotify.com/show/78SRCbyUZei41U33ZkVDme";
 
-    }
+
+
+    public SocialNetworkFragment() {}
 
     private void setupSocialLinkList(){
+
         socialNetworkList = new ArrayList<>();
-        socialNetworkList.add(ivoox);
-        socialNetworkList.add(instagram);
-        socialNetworkList.add(youtube);
-        socialNetworkList.add(facebook);
-        socialNetworkList.add(itunes);
-        socialNetworkList.add(twitter);
-        socialNetworkList.add(spotify);
+
+        socialNetworkList.add(new SocialNetwork(ivoox,ivoox_url));
+        socialNetworkList.add(new SocialNetwork(instagram,instagram_url));
+        socialNetworkList.add(new SocialNetwork(youtube,youtube_url));
+        socialNetworkList.add(new SocialNetwork(facebook,facebook_url));
+        socialNetworkList.add(new SocialNetwork(itunes,itunes_url));
+        socialNetworkList.add(new SocialNetwork(twitter,twitter_url));
+        socialNetworkList.add(new SocialNetwork(spotify,spotify_url));
     }
 
     @Override
@@ -73,51 +82,45 @@ public class SocialNetworkFragment extends Fragment {
     }
 
     private void setupOnClickListenerSocialNetworks(){
-        for(String socialNetwork: socialNetworkList){
+        for(SocialNetwork socialNetwork: socialNetworkList){
             setupOnClickListener(socialNetwork);
         }
     }
 
-    private void setupOnClickListener(String socialNetwork) {
+    private ImageView getSocialNetworkImageView(String name){
 
-        ImageView socialNetworkImageView;
-        String url;
-
-        switch (socialNetwork) {
+        switch (name){
             case ivoox:
-                socialNetworkImageView = mBinding.ivoox;
-                url = "https://www.ivoox.com/podcast-planos-centellas_sq_f1609149_1.html";
-                break;
+                return mBinding.ivoox;
             case youtube:
-                socialNetworkImageView = mBinding.youtube;
-                url = "https://www.youtube.com/channel/UCLacP2BYwAAJISa7-fAj64g";
-                break;
+                return mBinding.youtube;
             case twitter:
-                socialNetworkImageView = mBinding.twitter;
-                url = "https://twitter.com/planoscentellas?lang=en";
-                break;
+                return mBinding.twitter;
             case instagram:
-                socialNetworkImageView = mBinding.instagram;
-                url = "https://www.instagram.com/planos_y_centellas/?hl=en";
-                break;
+                return mBinding.instagram;
             case itunes:
-                socialNetworkImageView = mBinding.itunes;
-                url = "https://podcasts.apple.com/us/podcast/planos-y-centellas/id1444091704";
-                break;
+                return mBinding.itunes;
             case facebook:
-                socialNetworkImageView = mBinding.facebook;
-                url = "https://www.facebook.com/pages/category/Podcast/Planos-y-Centellas-1950069131742290/";
-                break;
+                return mBinding.facebook;
             case spotify:
-                socialNetworkImageView = mBinding.spotify;
-                url = "https://open.spotify.com/show/78SRCbyUZei41U33ZkVDme";
-                break;
+                return mBinding.spotify;
             default:
-                throw new IllegalStateException("Unexpected value: " + socialNetwork);
+                throw new IllegalStateException("Unexpected value: " + name);
         }
 
-        socialNetworkImageView.setOnClickListener(v -> launchActivity(url));
+    }
 
+    private void setupOnClickListener(SocialNetwork socialNetwork) {
+
+        try {
+
+            ImageView socialNetworkImageView;
+            socialNetworkImageView = getSocialNetworkImageView(socialNetwork.getName());
+            socialNetworkImageView.setOnClickListener(v -> launchActivity(socialNetwork.getUrl()));
+
+        } catch (IllegalStateException e){
+            e.printStackTrace();
+        }
     }
 
     private void launchActivity(String url){
