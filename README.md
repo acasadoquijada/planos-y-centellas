@@ -1,5 +1,9 @@
 # Planos y Centellas
 
+## NOTE
+
+This app is *DEPRECATED* please use [this one instead](https://github.com/acasadoquijada/planos-y-centellas-kotlin)
+
 ![Planos y Centellas logo](resources/img/planos_y_centellas_logo.png)
 
 
